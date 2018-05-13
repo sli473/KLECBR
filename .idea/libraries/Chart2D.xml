@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Chart2D">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jCOLIBRI2/lib/evaluation/Chart2D.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="travelrecommender">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jCOLIBRI2/example/travelrecommender.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

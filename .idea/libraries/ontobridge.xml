@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="ontobridge">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jCOLIBRI2/lib/ontobridge/ontobridge.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/jCOLIBRI2/lib/ontobridge/ontobridge.jar!/doc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/jCOLIBRI2/lib/ontobridge/ontobridge.jar!/" />
+    </SOURCES>
+  </library>
+</component>
