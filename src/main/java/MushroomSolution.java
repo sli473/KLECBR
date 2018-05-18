@@ -1,6 +1,7 @@
+import jcolibri.cbrcore.CaseComponent;
 import jcolibri.cbrcore.Attribute;
 
-public class MushroomSolution implements jcolibri.cbrcore.CaseComponent {
+public class MushroomSolution implements CaseComponent {
 
     String _id;
     boolean _isPoisonous;
