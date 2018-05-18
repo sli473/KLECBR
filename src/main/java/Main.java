@@ -1,4 +1,6 @@
+import KLE.LogisticRegressionManager;
 import jcolibri.casebase.CachedLinealCaseBase;
+import smile.classification.LogisticRegression;
 
 public class Main {
 
@@ -7,5 +9,9 @@ public class Main {
 
         CaseBaseGenerator cb = new CaseBaseGenerator();
         cb.generate();
+
+        LogisticRegressionManager lgm = new LogisticRegressionManager();
+        lgm.parseArffFile();
+        lgm.trainLogisticRegression();
     }
 }

@@ -1,6 +1,5 @@
 package KLE;
 
-import smile.classification.LogisticRegression;
 import smile.data.AttributeDataset;
 import smile.data.parser.ArffParser;
 
@@ -44,10 +43,18 @@ public class LogisticRegressionManager {
         System.out.println(y[0]);
 
         for (int i = 0; i < y.length; i++) {
-            if (y[i] == logisticRegression.predict(x[i])) {
-                error++;
+//            if (y[i] == logisticRegression.predict(x[i])) {
+//                error++;
+//            }
+
+            double classificationValue = logisticRegression.getClassificationValue(x[i]);
+
+            if(classificationValue < 0.9 && classificationValue > 0.1) {
+                System.out.println(classificationValue);
             }
+
         }
+
 
         System.out.println("Logistic regression error: " + error);
     }
