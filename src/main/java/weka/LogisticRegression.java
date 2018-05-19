@@ -69,18 +69,17 @@ public class LogisticRegression {
         Evaluation eval = new Evaluation(trainingDataSet);
         eval.evaluateModel(classifier, testingDataSet);
         /** Print the algorithm summary */
-//        System.out.println("** Linear Regression Evaluation with Datasets **");
-//        System.out.println(eval.toSummaryString());
-//        System.out.print(" the expression for the input data as per alogorithm is ");
+        System.out.println("** Linear Regression Evaluation with Datasets **");
+        System.out.println(eval.toSummaryString());
+        System.out.print(" the expression for the input data as per alogorithm is ");
         System.out.println(classifier);
-//        System.out.println(classifier.getCapabilities());
 
-        for (int i = 0; i < coefficients.length; i++) {
-            System.out.println(coefficients[i][0]);
+        System.out.println("----------------------------------------------");
+
+        for (int j = 0; j < coefficients.length; j++) {
+            double oddsRatio = Math.exp(coefficients[j][0]);
+            System.out.println(oddsRatio);
         }
-
-        System.out.println(coefficients.length);
-        System.out.println(coefficients[0].length);
 
         Instance predicationDataSet = getDataSet(PREDICTION_DATA_SET_FILENAME).lastInstance();
         double value = classifier.classifyInstance(predicationDataSet);
