@@ -4,9 +4,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.Logistic;
+import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader;
@@ -18,12 +20,15 @@ import weka.core.converters.ArffLoader;
  */
 public class LogisticRegression {
 
-    public static final String TRAINING_DATA_SET_FILENAME="/data/mushrooms.arff";
-    public static final String TESTING_DATA_SET_FILENAME="/data/small-test.arff";
-    public static final String PREDICTION_DATA_SET_FILENAME="/data/mushrooms.arff";
+    private static final String TRAINING_DATA_SET_FILENAME="/data/mushrooms.arff";
+    private static final String TESTING_DATA_SET_FILENAME="/data/small-test.arff";
+    private static final String PREDICTION_DATA_SET_FILENAME="/data/mushrooms.arff";
+
+    private static double[][] coefficients;
 
     /**
      * This method is to load the data set.
+     * Currently temporarily until we find out how to parse in raw data from CBR
      * @param fileName
      * @return
      * @throws IOException
@@ -47,6 +52,37 @@ public class LogisticRegression {
         return dataSet;
     }
 
+    public static double[][] findOddsRatio(Instance caseQuery, Instance explanationQuery) {
+
+        double oddsRatio = coefficients[0][0];
+        int coefficientCount = 1;
+
+        System.out.println(caseQuery.attribute(2).numValues());
+
+        for (int i = 0; i < caseQuery.numAttributes(); i++) {
+            Attribute attribute = caseQuery.attribute(i);
+            System.out.print(attribute + ":           " + caseQuery.stringValue(i));
+            System.out.println("");
+
+            for(int j = 0; j < attribute.numValues(); j++){
+
+                coefficientCount++;
+            }
+        }
+
+//        for (int i = 0; i < coefficients[0].length; i++) {
+//            Attribute attribute = caseQuery.attribute(i);
+//            System.out.print(attribute + ":           " + caseQuery.stringValue(i));
+//            System.out.println("");
+//
+//            for(int j = 0; j < attribute.numValues(); j++){
+//
+//            }
+//        }
+
+        return null;
+    }
+
     /**
      * This method is used to process the input and return the statistics.
      *
@@ -61,7 +97,7 @@ public class LogisticRegression {
         /** */
         classifier.buildClassifier(trainingDataSet);
 
-        double[][] coefficients = classifier.coefficients();
+        coefficients = classifier.coefficients();
         /**
          * train the alogorithm with the training data and evaluate the
          * algorithm with testing data
@@ -71,18 +107,24 @@ public class LogisticRegression {
         /** Print the algorithm summary */
         System.out.println("** Linear Regression Evaluation with Datasets **");
         System.out.println(eval.toSummaryString());
-        System.out.print(" the expression for the input data as per alogorithm is ");
+        System.out.print(" the odds ratio is...");
         System.out.println(classifier);
-
-        System.out.println("----------------------------------------------");
 
         for (int j = 0; j < coefficients.length; j++) {
             double oddsRatio = Math.exp(coefficients[j][0]);
-            System.out.println(oddsRatio);
+//            System.out.println(oddsRatio);
         }
 
         Instance predicationDataSet = getDataSet(PREDICTION_DATA_SET_FILENAME).lastInstance();
         double value = classifier.classifyInstance(predicationDataSet);
+        double[] instanceDistribution = classifier.distributionForInstance(predicationDataSet);
+
+        for (int j = 0; j < instanceDistribution.length; j++) {
+//            System.out.println(instanceDistribution[j]);
+        }
+
+        findOddsRatio(predicationDataSet, predicationDataSet);
+
         /** Prediction Output */
         System.out.println(value);
     }
