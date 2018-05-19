@@ -7,7 +7,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -23,5 +22,16 @@
     <orderEntry type="library" name="InfoVisual-CB" level="project" />
     <orderEntry type="library" name="arq" level="project" />
     <orderEntry type="library" name="pellet" level="project" />
+    <orderEntry type="library" name="Maven: jcolibri:jcolibri:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:logging:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org:hsqldb:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org:hibernate:3.0" level="project" />
+    <orderEntry type="library" name="Maven: org:dom4j:1.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:collections:3.2" level="project" />
+    <orderEntry type="library" name="Maven: javax:transaction:1" level="project" />
+    <orderEntry type="library" name="Maven: antlr:antlr:2.7.6" level="project" />
+    <orderEntry type="library" name="Maven: junit:junit:3.8.1" level="project" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.14" level="project" />
+    <orderEntry type="library" name="Maven: javax:stax:1.2.14" level="project" />
   </component>
 </module>
