@@ -10,22 +10,14 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.github.haifengl</groupId>
-            <artifactId>smile-core</artifactId>
-            <version>1.5.1</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/weka-stable -->
+        <!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/weka-dev -->
         <dependency>
             <groupId>nz.ac.waikato.cms.weka</groupId>
-            <artifactId>weka-stable</artifactId>
-            <version>3.8.0</version>
+            <artifactId>weka-dev</artifactId>
+            <version>3.9.2</version>
         </dependency>
 
     </dependencies>
-
-
 
     <build>
         <plugins>
