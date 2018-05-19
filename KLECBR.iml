@@ -22,140 +22,16 @@
     <orderEntry type="library" name="InfoVisual-CB" level="project" />
     <orderEntry type="library" name="arq" level="project" />
     <orderEntry type="library" name="pellet" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: org.hibernate:hibernate:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/databaseconnector/hibernate3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: jcolibri:jcolibri:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/jcolibri2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: org.hsqldb:hsqldb:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/databaseconnector/hsqldb.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: org.apache.commons.logging:commons-logging:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/commons/commons-logging-1.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: org.apache.commons.collections:common-collections:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/commons/commons-collections-3.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: org.dom4j:dom4j:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/commons/dom4j-1.6.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: antlr:antlr:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/commons/antlr-2.7.6.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: junit:junit:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/commons/junit.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: org.apache.log4j:log4j:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/commons/log4j-1.2.14.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: javax:javax:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/commons/stax-api-1.0.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: org.objectweb.asm:asm:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/databaseconnector/asm.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: org.objectweb.asm.attrs:attrs:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/databaseconnector/asm-attrs.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: com.mchange:mchange:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/databaseconnector/c3p0-0.9.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: net.sf.cglib:cglib:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/databaseconnector/cglib-2.1.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: javax.transaction:transaction:unknown">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/jCOLIBRI2/lib/databaseconnector/jta.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="Maven: jcolibri:jcolibri:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:logging:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org:hsqldb:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org:hibernate:3.0" level="project" />
+    <orderEntry type="library" name="Maven: org:dom4j:1.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:collections:3.2" level="project" />
+    <orderEntry type="library" name="Maven: javax:transaction:1" level="project" />
+    <orderEntry type="library" name="Maven: antlr:antlr:2.7.6" level="project" />
+    <orderEntry type="library" name="Maven: junit:junit:3.8.1" level="project" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.14" level="project" />
+    <orderEntry type="library" name="Maven: javax:stax:1.2.14" level="project" />
   </component>
 </module>
