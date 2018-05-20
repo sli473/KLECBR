@@ -13,6 +13,7 @@ import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.selection.SelectCases;
 import jcolibri.util.FileIO;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import jcolibri.cbrcore.CBRCase;
@@ -26,7 +27,8 @@ public class Main {
     static CBRCaseBase _caseBase;
 
     public static void main (String[] args) {
-        System.out.println("Hello world,");
+
+        Collection<CBRCase> localCaseBase;
 
         HSQLDBserver.init();
 
@@ -107,19 +109,53 @@ public class Main {
             MushroomSolution s = (MushroomSolution) c.getSolution();
             System.out.println("solution"+ s.is_isPoisonous());
             System.out.println(c);
-            System.out.println("test");
         }
 
 
+        // This creates a sorted rank of all the cases seems kind of expensive imo
         Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
-        eval = SelectCases.selectTopKRR(eval, 3);
 
-        System.out.println();
-        Iterator var6 = eval.iterator();
+        Iterator var2 = eval.iterator();
+
+        while(var2.hasNext()) {
+            RetrievalResult help = (RetrievalResult) var2.next();
+            System.out.println(help);
+        }
+
+        localCaseBase = createLocalCaseBase(eval, 4);
+
+        Iterator var6 = localCaseBase.iterator();
 
         while(var6.hasNext()) {
-            RetrievalResult nse = (RetrievalResult)var6.next();
+            CBRCase nse = (CBRCase)var6.next();
+            MushroomSolution ms =(MushroomSolution) nse.getSolution();
+            System.out.println(ms.is_isPoisonous());
             System.out.println(nse);
         }
+    }
+
+    public static Collection<CBRCase> createLocalCaseBase(Collection<RetrievalResult> cases, int k) {
+        ArrayList<CBRCase> res = new ArrayList();
+        Iterator<RetrievalResult> iterator = cases.iterator();
+        int casesSupportingClassification = 0;
+        int casesAgainstClassification = 0;
+        CBRCase currentCase;
+        MushroomSolution caseSolution;
+        String isPoisonous;
+
+        while(iterator.hasNext() && (casesSupportingClassification < k || casesAgainstClassification < k)) {
+            currentCase = iterator.next().get_case();
+            caseSolution = (MushroomSolution) currentCase.getSolution();
+            isPoisonous = caseSolution.is_isPoisonous();
+            if(isPoisonous.equals("e") && casesSupportingClassification < k) {
+                res.add(currentCase);
+                casesSupportingClassification++;
+            } else if(isPoisonous.equals("p") && casesAgainstClassification < k) {
+                res.add(currentCase);
+                casesAgainstClassification++;
+            }
+        }
+
+        return res;
     }
 }
