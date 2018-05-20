@@ -3,6 +3,9 @@ package weka;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.CountDownLatch;
 
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import weka.classifiers.Classifier;
@@ -24,7 +27,7 @@ public class LogisticRegression {
     private static final String TESTING_DATA_SET_FILENAME="/data/small-test.arff";
     private static final String PREDICTION_DATA_SET_FILENAME="/data/mushrooms.arff";
 
-    private static double[][] coefficients;
+    private static HashMap<String, HashMap<String, Double>> _coefficients;
 
     /**
      * This method is to load the data set.
@@ -52,9 +55,32 @@ public class LogisticRegression {
         return dataSet;
     }
 
+    public static void sortCoefficients(Instance instance, double[][] coefficients){
+        _coefficients = new HashMap<>();
+        int coefficientCount = 1;
+
+        for (int i = 1; i < instance.numAttributes(); i++) {
+            HashMap<String, Double> variables = new HashMap<>();
+            Attribute attribute = instance.attribute(i);
+            System.out.println(attribute.name());
+            System.out.println(attribute.numValues());
+            if (attribute.numValues() == 2) {
+                variables.put(attribute.value(1), coefficients[coefficientCount][0]);
+                coefficientCount++;
+            } else if (attribute.numValues() > 2) {
+                for (int j = 0; j < attribute.numValues(); j++) {
+                    variables.put(attribute.value(j), coefficients[coefficientCount][0]);
+                    coefficientCount++;
+                }
+            }
+            _coefficients.put(attribute.name(), variables);
+        }
+
+    }
+
     public static double[][] findOddsRatio(Instance caseQuery, Instance explanationQuery) {
 
-        double oddsRatio = coefficients[0][0];
+//        double oddsRatio = coefficients[0][0];
         int coefficientCount = 1;
 
         System.out.println(caseQuery.attribute(2).numValues());
@@ -97,11 +123,13 @@ public class LogisticRegression {
         /** */
         classifier.buildClassifier(trainingDataSet);
 
-        coefficients = classifier.coefficients();
+        double[][] coefficients = classifier.coefficients();
         /**
          * train the alogorithm with the training data and evaluate the
          * algorithm with testing data
          */
+
+
         Evaluation eval = new Evaluation(trainingDataSet);
         eval.evaluateModel(classifier, testingDataSet);
         /** Print the algorithm summary */
@@ -110,9 +138,14 @@ public class LogisticRegression {
         System.out.print(" the odds ratio is...");
         System.out.println(classifier);
 
+        System.out.println("SIZE: " + coefficients.length);
+
+        sortCoefficients(trainingDataSet.firstInstance(), coefficients);
+        System.out.println("FINNNNNEE ================================");
+
         for (int j = 0; j < coefficients.length; j++) {
             double oddsRatio = Math.exp(coefficients[j][0]);
-//            System.out.println(oddsRatio);
+            System.out.println(coefficients[j][0]);
         }
 
         Instance predicationDataSet = getDataSet(PREDICTION_DATA_SET_FILENAME).lastInstance();
