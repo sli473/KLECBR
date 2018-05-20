@@ -2,7 +2,7 @@ import jcolibri.cbrcore.Attribute;
 
 public class MushroomDescription implements jcolibri.cbrcore.CaseComponent {
 
-    String _caseId;
+    int _caseId;
     String _capShape;
     String _capSurface;
     String _capColour;
@@ -15,6 +15,7 @@ public class MushroomDescription implements jcolibri.cbrcore.CaseComponent {
     String _stalkShape;
     String _stalkRoot;
     String _stalkSurfaceAboveRing;
+    String _stalkSurfaceBelowRing;
     String _stalkColourAboveRing;
     String _stalkColourBelowRing;
     String _veilType;
@@ -27,11 +28,11 @@ public class MushroomDescription implements jcolibri.cbrcore.CaseComponent {
 
     public MushroomDescription() {}
 
-    public String get_caseId() {
+    public int get_caseId() {
         return _caseId;
     }
 
-    public void set_caseId(String _caseId) {
+    public void set_caseId(int _caseId) {
         this._caseId = _caseId;
     }
 
@@ -129,6 +130,14 @@ public class MushroomDescription implements jcolibri.cbrcore.CaseComponent {
 
     public void set_stalkSurfaceAboveRing(String _stalkSurfaceAboveRing) {
         this._stalkSurfaceAboveRing = _stalkSurfaceAboveRing;
+    }
+
+    public String get_stalkSurfaceBelowRing() {
+        return _stalkSurfaceBelowRing;
+    }
+
+    public void set_stalkSurfaceBelowRing(String _stalkSurfaceBelowRing) {
+        this._stalkSurfaceBelowRing = _stalkSurfaceBelowRing;
     }
 
     public String get_stalkColourAboveRing() {

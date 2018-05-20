@@ -1,8 +1,9 @@
 import jcolibri.cbrcore.Attribute;
+import jcolibri.cbrcore.CaseComponent;
 
-public class MushroomSolution implements jcolibri.cbrcore.CaseComponent {
+public class MushroomSolution implements CaseComponent {
 
-    String _id;
+    int _id;
     boolean _isPoisonous;
 
     public MushroomSolution() {}
@@ -12,11 +13,11 @@ public class MushroomSolution implements jcolibri.cbrcore.CaseComponent {
         return new Attribute("_id", this.getClass());
     }
 
-    public String get_id() {
+    public int get_id() {
         return _id;
     }
 
-    public void set_id(String _id) {
+    public void set_id(int _id) {
         this._id = _id;
     }
 
