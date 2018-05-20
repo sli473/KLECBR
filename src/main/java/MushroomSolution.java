@@ -4,7 +4,7 @@ import jcolibri.cbrcore.CaseComponent;
 public class MushroomSolution implements CaseComponent {
 
     int _id;
-    boolean _isPoisonous;
+    String _isPoisonous;
 
     public MushroomSolution() {}
 
@@ -21,11 +21,11 @@ public class MushroomSolution implements CaseComponent {
         this._id = _id;
     }
 
-    public boolean is_isPoisonous() {
+    public String is_isPoisonous() {
         return _isPoisonous;
     }
 
-    public void set_isPoisonous(boolean _isPoisonous) {
+    public void set_isPoisonous(String _isPoisonous) {
         this._isPoisonous = _isPoisonous;
     }
 
