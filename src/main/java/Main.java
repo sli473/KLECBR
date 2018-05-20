@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
 import jcolibri.cbrcore.CBRCase;
 
 import jcolibri.method.retrieve.NNretrieval.similarity.StandardGlobalSimilarityFunction;
@@ -122,7 +123,7 @@ public class Main {
             System.out.println(help);
         }
 
-        localCaseBase = createLocalCaseBase(eval, 4);
+        localCaseBase = createLocalCaseBase(eval, 20);
 
         Iterator var6 = localCaseBase.iterator();
 
@@ -144,15 +145,18 @@ public class Main {
         String isPoisonous;
 
         while(iterator.hasNext() && (casesSupportingClassification < k || casesAgainstClassification < k)) {
-            currentCase = iterator.next().get_case();
+            RetrievalResult rs = iterator.next();
+            currentCase = rs.get_case();
             caseSolution = (MushroomSolution) currentCase.getSolution();
             isPoisonous = caseSolution.is_isPoisonous();
             if(isPoisonous.equals("e") && casesSupportingClassification < k) {
                 res.add(currentCase);
                 casesSupportingClassification++;
+                System.out.println("Print true case" + rs);
             } else if(isPoisonous.equals("p") && casesAgainstClassification < k) {
                 res.add(currentCase);
                 casesAgainstClassification++;
+                System.out.println("Print false case" + rs);
             }
         }
 
