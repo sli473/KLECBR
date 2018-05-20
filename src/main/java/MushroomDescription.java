@@ -2,7 +2,7 @@ import jcolibri.cbrcore.Attribute;
 
 public class MushroomDescription implements jcolibri.cbrcore.CaseComponent {
 
-    String _caseId;
+    int _caseId;
     String _capShape;
     String _capSurface;
     String _capColour;
@@ -28,11 +28,11 @@ public class MushroomDescription implements jcolibri.cbrcore.CaseComponent {
 
     public MushroomDescription() {}
 
-    public String get_caseId() {
+    public int get_caseId() {
         return _caseId;
     }
 
-    public void set_caseId(String _caseId) {
+    public void set_caseId(int _caseId) {
         this._caseId = _caseId;
     }
 

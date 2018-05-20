@@ -15,6 +15,7 @@ import jcolibri.util.FileIO;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
+import jcolibri.cbrcore.CBRCase;
 
 import jcolibri.method.retrieve.NNretrieval.similarity.StandardGlobalSimilarityFunction;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
@@ -96,8 +97,21 @@ public class Main {
         simConfig.addMapping(new Attribute("_population", MushroomDescription.class), new Equal());
         simConfig.addMapping(new Attribute("_habitat", MushroomDescription.class), new Equal());
 
+        Collection<CBRCase> cb = _caseBase.getCases();
+        Iterator var3 = cb.iterator();
+
+        while(var3.hasNext()) {
+            CBRCase c = (CBRCase)var3.next();
+            MushroomDescription d = (MushroomDescription) c.getDescription();
+            System.out.println(d.get_bruises());
+            MushroomSolution s = (MushroomSolution) c.getSolution();
+            System.out.println("solution"+ s.is_isPoisonous());
+            System.out.println(c);
+        }
+
+
         Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
-        eval = SelectCases.selectTopKRR(eval, 5);
+        eval = SelectCases.selectTopKRR(eval, 3);
 
         System.out.println();
         Iterator var6 = eval.iterator();

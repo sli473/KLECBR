@@ -4,6 +4,7 @@
 <class name="MushroomSolution" table="Mushrooms">
 
 	<id name="_id" column="caseId">
+		<generator class="native"/>
 	</id>
 	<property name="_isPoisonous" column="isPoisonous"/>
 
