@@ -1,5 +1,5 @@
 CREATE TABLE mytable(
-   class                    VARCHAR(1) NOT NULL PRIMARY KEY
+   isPoisonous              VARCHAR(1) NOT NULL PRIMARY KEY
   ,capshape                 VARCHAR(1) NOT NULL
   ,capsurface               VARCHAR(1) NOT NULL
   ,capcolor                 VARCHAR(1) NOT NULL
@@ -23,7 +23,7 @@ CREATE TABLE mytable(
   ,population               VARCHAR(1) NOT NULL
   ,habitat                  VARCHAR(1) NOT NULL
 );
-INSERT INTO mytable(class,capshape,capsurface,capcolor,bruises,odor,gillattachment,gillspacing,gillsize,gillcolor,stalkshape,stalkroot,stalksurfaceabovering,stalksurfacebelowring,stalkcolorabovering,stalkcolorbelowring,veiltype,veilcolor,ringnumber,ringtype,sporeprintcolor,population,habitat) VALUES ('p','x','s','n','t','p','f','c','n','k','e','e','s','s','w','w','p','w','o','p','k','s','u');
+INSERT INTO mytable(isPoisonous,capshape,capsurface,capcolor,bruises,odor,gillattachment,gillspacing,gillsize,gillcolor,stalkshape,stalkroot,stalksurfaceabovering,stalksurfacebelowring,stalkcolorabovering,stalkcolorbelowring,veiltype,veilcolor,ringnumber,ringtype,sporeprintcolor,population,habitat) VALUES ('p','x','s','n','t','p','f','c','n','k','e','e','s','s','w','w','p','w','o','p','k','s','u');
 INSERT INTO mytable(class,capshape,capsurface,capcolor,bruises,odor,gillattachment,gillspacing,gillsize,gillcolor,stalkshape,stalkroot,stalksurfaceabovering,stalksurfacebelowring,stalkcolorabovering,stalkcolorbelowring,veiltype,veilcolor,ringnumber,ringtype,sporeprintcolor,population,habitat) VALUES ('e','x','s','y','t','a','f','c','b','k','e','c','s','s','w','w','p','w','o','p','n','n','g');
 INSERT INTO mytable(class,capshape,capsurface,capcolor,bruises,odor,gillattachment,gillspacing,gillsize,gillcolor,stalkshape,stalkroot,stalksurfaceabovering,stalksurfacebelowring,stalkcolorabovering,stalkcolorbelowring,veiltype,veilcolor,ringnumber,ringtype,sporeprintcolor,population,habitat) VALUES ('e','b','s','w','t','l','f','c','b','n','e','c','s','s','w','w','p','w','o','p','n','n','m');
 INSERT INTO mytable(class,capshape,capsurface,capcolor,bruises,odor,gillattachment,gillspacing,gillsize,gillcolor,stalkshape,stalkroot,stalksurfaceabovering,stalksurfacebelowring,stalkcolorabovering,stalkcolorbelowring,veiltype,veilcolor,ringnumber,ringtype,sporeprintcolor,population,habitat) VALUES ('p','x','y','w','t','p','f','c','n','n','e','e','s','s','w','w','p','w','o','p','k','s','u');
