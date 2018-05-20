@@ -10,7 +10,7 @@ public class Main {
         try {
             logisticRegression.process();
         } catch (Exception e) {
-            System.out.println("Sam said he was retarded");
+            System.out.println("Something went wrong");
         }
 
         CaseBaseGenerator cb = new CaseBaseGenerator();
