@@ -107,6 +107,7 @@ public class Main {
             MushroomSolution s = (MushroomSolution) c.getSolution();
             System.out.println("solution"+ s.is_isPoisonous());
             System.out.println(c);
+            System.out.println("test");
         }
 
 
