@@ -12,14 +12,18 @@ import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
 import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.selection.SelectCases;
 import jcolibri.util.FileIO;
+
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
 import jcolibri.cbrcore.CBRCase;
 
 import jcolibri.method.retrieve.NNretrieval.similarity.StandardGlobalSimilarityFunction;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
+import weka.LogisticRegression;
 
 public class Main {
 
@@ -29,7 +33,6 @@ public class Main {
     public static void main (String[] args) {
 
         Collection<CBRCase> localCaseBase;
-
         HSQLDBserver.init();
 
         _caseBase = new LinealCaseBase();
@@ -48,6 +51,95 @@ public class Main {
             e.printStackTrace();
         }
 
+        CBRQuery query = createQuery();
+
+        NNConfig simConfig = new NNConfig();
+        setUpNNConfig(simConfig);
+
+        // This creates a sorted rank of all the cases seems kind of expensive imo
+        Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
+
+        Iterator var2 = eval.iterator();
+
+        while(var2.hasNext()) {
+            RetrievalResult help = (RetrievalResult) var2.next();
+            System.out.println(help);
+        }
+
+        localCaseBase = createLocalCaseBase(eval, 20);
+
+        Iterator var6 = localCaseBase.iterator();
+
+        while(var6.hasNext()) {
+            CBRCase nse = (CBRCase)var6.next();
+            MushroomSolution ms =(MushroomSolution) nse.getSolution();
+            System.out.println(ms.is_isPoisonous());
+            System.out.println(nse);
+        }
+
+        URL savedCaseBase = FileIO.findFile("data/localcasebase.arff");
+        URL fileTemplate = FileIO.findFile("data/mushroomTemplate.arff");
+
+        BufferedWriter bw;
+        BufferedReader br;
+
+        ArrayList<String> lines = getArffCases(localCaseBase);
+        String line;
+
+        try {
+            br = new BufferedReader(new FileReader(fileTemplate.getFile()));
+            bw = new BufferedWriter(new FileWriter(savedCaseBase.getFile()));
+            bw.write("");
+            while((line = br.readLine()) != null) {
+                bw.append(line);
+                bw.newLine();
+            }
+            for(String cases : lines) {
+                bw.append(cases);
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        LogisticRegression logisticRegression = new LogisticRegression();
+        try {
+            logisticRegression.process();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Collection<CBRCase> createLocalCaseBase(Collection<RetrievalResult> cases, int k) {
+        ArrayList<CBRCase> res = new ArrayList();
+        Iterator<RetrievalResult> iterator = cases.iterator();
+        int casesSupportingClassification = 0;
+        int casesAgainstClassification = 0;
+        CBRCase currentCase;
+        MushroomSolution caseSolution;
+        String isPoisonous;
+
+        while(iterator.hasNext() && (casesSupportingClassification < k || casesAgainstClassification < k)) {
+            RetrievalResult rs = iterator.next();
+            currentCase = rs.get_case();
+            caseSolution = (MushroomSolution) currentCase.getSolution();
+            isPoisonous = caseSolution.is_isPoisonous();
+            if(isPoisonous.equals("e") && casesSupportingClassification < k) {
+                res.add(currentCase);
+                casesSupportingClassification++;
+                System.out.println("Print true case" + rs);
+            } else if(isPoisonous.equals("p") && casesAgainstClassification < k) {
+                res.add(currentCase);
+                casesAgainstClassification++;
+                System.out.println("Print false case" + rs);
+            }
+        }
+
+        return res;
+    }
+
+    public static CBRQuery createQuery() {
         MushroomDescription queryDesc = new MushroomDescription();
         queryDesc.set_bruises("f");
         queryDesc.set_capColour("w");
@@ -73,8 +165,10 @@ public class Main {
         queryDesc.set_habitat("u");
         CBRQuery query = new CBRQuery();
         query.setDescription(queryDesc);
+        return query;
+    }
 
-        NNConfig simConfig = new NNConfig();
+    public static void setUpNNConfig(NNConfig simConfig) {
         simConfig.setDescriptionSimFunction(new Average());
         simConfig.addMapping(new Attribute("_capShape", MushroomDescription.class), new Equal());
         simConfig.addMapping(new Attribute("_capSurface", MushroomDescription.class), new Equal());
@@ -98,7 +192,9 @@ public class Main {
         simConfig.addMapping(new Attribute("_sporePrintColor", MushroomDescription.class), new Equal());
         simConfig.addMapping(new Attribute("_population", MushroomDescription.class), new Equal());
         simConfig.addMapping(new Attribute("_habitat", MushroomDescription.class), new Equal());
+    }
 
+    public static void printCaseBase() {
         Collection<CBRCase> cb = _caseBase.getCases();
         Iterator var3 = cb.iterator();
 
@@ -110,52 +206,43 @@ public class Main {
             System.out.println("solution"+ s.is_isPoisonous());
             System.out.println(c);
         }
-
-
-        // This creates a sorted rank of all the cases seems kind of expensive imo
-        Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
-
-        Iterator var2 = eval.iterator();
-
-        while(var2.hasNext()) {
-            RetrievalResult help = (RetrievalResult) var2.next();
-            System.out.println(help);
-        }
-
-        localCaseBase = createLocalCaseBase(eval, 4);
-
-        Iterator var6 = localCaseBase.iterator();
-
-        while(var6.hasNext()) {
-            CBRCase nse = (CBRCase)var6.next();
-            MushroomSolution ms =(MushroomSolution) nse.getSolution();
-            System.out.println(ms.is_isPoisonous());
-            System.out.println(nse);
-        }
     }
 
-    public static Collection<CBRCase> createLocalCaseBase(Collection<RetrievalResult> cases, int k) {
-        ArrayList<CBRCase> res = new ArrayList();
-        Iterator<RetrievalResult> iterator = cases.iterator();
-        int casesSupportingClassification = 0;
-        int casesAgainstClassification = 0;
-        CBRCase currentCase;
-        MushroomSolution caseSolution;
-        String isPoisonous;
+    public static ArrayList<String> getArffCases(Collection<CBRCase> localCaseBase) {
+        ArrayList<String> arffText = new ArrayList<>();
+        Iterator<CBRCase> caseIterator = localCaseBase.iterator();
+        StringBuilder stringBuilder;
 
-        while(iterator.hasNext() && (casesSupportingClassification < k || casesAgainstClassification < k)) {
-            currentCase = iterator.next().get_case();
-            caseSolution = (MushroomSolution) currentCase.getSolution();
-            isPoisonous = caseSolution.is_isPoisonous();
-            if(isPoisonous.equals("e") && casesSupportingClassification < k) {
-                res.add(currentCase);
-                casesSupportingClassification++;
-            } else if(isPoisonous.equals("p") && casesAgainstClassification < k) {
-                res.add(currentCase);
-                casesAgainstClassification++;
-            }
+        while(caseIterator.hasNext()) {
+            CBRCase cbrCase = caseIterator.next();
+            MushroomSolution solution = (MushroomSolution)cbrCase.getSolution();
+            MushroomDescription description = (MushroomDescription)cbrCase.getDescription();
+            stringBuilder = new StringBuilder();
+            stringBuilder.append(solution.is_isPoisonous() +',');
+            stringBuilder.append(description.get_capShape() + ',');
+            stringBuilder.append(description.get_capSurface() + ',');
+            stringBuilder.append(description.get_capColour() + ',');
+            stringBuilder.append(description.get_bruises() + ',');
+            stringBuilder.append(description.get_odor() + ',');
+            stringBuilder.append(description.get_gillAttachment() + ',');
+            stringBuilder.append(description.get_gillSpacing() + ',');
+            stringBuilder.append(description.get_gillSize() + ',');
+            stringBuilder.append(description.get_gillColor() + ',');
+            stringBuilder.append(description.get_stalkShape() + ',');
+            stringBuilder.append(description.get_stalkRoot() + ',');
+            stringBuilder.append(description.get_stalkSurfaceAboveRing() + ',');
+            stringBuilder.append(description.get_stalkSurfaceBelowRing() + ',');
+            stringBuilder.append(description.get_stalkColourAboveRing() + ',');
+            stringBuilder.append(description.get_stalkColourBelowRing() + ',');
+            stringBuilder.append(description.get_veilType() + ',');
+            stringBuilder.append(description.get_veilColour() + ',');
+            stringBuilder.append(description.get_ringNumber() + ',');
+            stringBuilder.append(description.get_ringType() + ',');
+            stringBuilder.append(description.get_sporePrintColor() + ',');
+            stringBuilder.append(description.get_population() + ',');
+            stringBuilder.append(description.get_habitat());
+            arffText.add(stringBuilder.toString());
         }
-
-        return res;
+        return arffText;
     }
 }
