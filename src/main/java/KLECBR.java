@@ -1,26 +1,33 @@
 import jcolibri.cbraplications.StandardCBRApplication;
-import jcolibri.cbrcore.CBRCaseBase;
-import jcolibri.cbrcore.CBRQuery;
 import jcolibri.exception.ExecutionException;
+import jcolibri.cbrcore.CBRCaseBase;
+import jcolibri.method.retrieve.NNretrieval.NNConfig;
+import jcolibri.method.retrieve.RetrievalResult;
+import jcolibri.cbrcore.CBRCase;
+import java.util.ArrayList;
+import jcolibri.cbrcore.CBRQuery;
 
-public class KLECBR implements StandardCBRApplication {
-    @Override
-    public void configure() throws ExecutionException {
+import java.util.Collection;
 
-    }
 
-    @Override
-    public CBRCaseBase preCycle() throws ExecutionException {
-        return null;
-    }
+public interface KLECBR extends StandardCBRApplication {
 
-    @Override
-    public void cycle(CBRQuery cbrQuery) throws ExecutionException {
+    void configure() throws jcolibri.exception.ExecutionException;
 
-    }
+    CBRCaseBase preCycle() throws ExecutionException;
 
-    @Override
-    public void postCycle() throws ExecutionException {
+    void cycle(CBRQuery cbrQuery) throws ExecutionException;
 
-    }
+    void postCycle() throws ExecutionException;
+
+    void setUpNNConfig(NNConfig simConfig);
+
+    Collection<CBRCase> createLocalCaseBase(Collection<RetrievalResult> cases, int k);
+
+    ArrayList<String> getArffCases(Collection<CBRCase> localCaseBase);
+
+    void printCaseBase();
+
+    CBRQuery createQuery();
+
 }
