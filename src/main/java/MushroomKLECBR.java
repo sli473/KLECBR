@@ -23,6 +23,8 @@ public class MushroomKLECBR implements KLECBR {
     CBRCaseBase _caseBase;
     Collection<CBRCase> localCaseBase;
     MushroomSolution _solution;
+    ArrayList<CBRCase> _fortioriCase;
+    NNConfig _simConfig;
 
     public static MushroomKLECBR getInstance() {
         if (_instance == null) {
@@ -56,6 +58,8 @@ public class MushroomKLECBR implements KLECBR {
         NNConfig simConfig = new NNConfig();
         setUpNNConfig(simConfig);
 
+        _simConfig = simConfig;
+
         // This creates a sorted rank of all the cases seems kind of expensive imo
         Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), cbrQuery, simConfig);
 
@@ -66,8 +70,8 @@ public class MushroomKLECBR implements KLECBR {
             System.out.println(help);
         }
 
-        localCaseBase = createLocalCaseBase(eval, 20);
         _solution = (MushroomSolution)calculateSolution(eval, 20);
+        localCaseBase = createLocalCaseBase(eval, 20);
 
         Iterator var6 = localCaseBase.iterator();
 
@@ -148,6 +152,8 @@ public class MushroomKLECBR implements KLECBR {
     @Override
     public Collection<CBRCase> createLocalCaseBase(Collection<RetrievalResult> cases, int k) {
         ArrayList<CBRCase> res = new ArrayList();
+        ArrayList<CBRCase> poisonousCases = new ArrayList();
+        ArrayList<CBRCase> edibleCases = new ArrayList();
         Iterator<RetrievalResult> iterator = cases.iterator();
         int casesSupportingClassification = 0;
         int casesAgainstClassification = 0;
@@ -161,21 +167,35 @@ public class MushroomKLECBR implements KLECBR {
             caseSolution = (MushroomSolution) currentCase.getSolution();
             isPoisonous = caseSolution.is_isPoisonous();
             if (isPoisonous.equals("e") && casesSupportingClassification < k) {
+                edibleCases.add(currentCase);
                 res.add(currentCase);
                 casesSupportingClassification++;
                 System.out.println("Print true case" + rs);
             } else if (isPoisonous.equals("p") && casesAgainstClassification < k) {
+                poisonousCases.add(currentCase);
                 res.add(currentCase);
                 casesAgainstClassification++;
                 System.out.println("Print false case" + rs);
             }
         }
+
+        String solution = _solution.is_isPoisonous();
+
+        if (solution.equals("e")) {
+            fortioriCase(edibleCases, poisonousCases.get(0));
+        } else {
+            fortioriCase(poisonousCases, edibleCases.get(0));
+        }
+
+
         return res;
     }
 
     @Override
     public ArrayList<String> getArffCases(Collection<CBRCase> localCaseBase) {
         ArrayList<String> arffText = new ArrayList<>();
+        localCaseBase.add(_fortioriCase.get(0));
+        localCaseBase.add(_fortioriCase.get(1));
         Iterator<CBRCase> caseIterator = localCaseBase.iterator();
         StringBuilder stringBuilder;
 
@@ -257,6 +277,31 @@ public class MushroomKLECBR implements KLECBR {
         return query;
     }
 
+    public void fortioriCase(ArrayList<CBRCase> caseBase, CBRCase cbrCase) {
+
+        CBRQuery query = new CBRQuery();
+        query.setDescription(cbrCase.getDescription());
+
+        Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase, query, _simConfig);
+        double maxSim = 0;
+        CBRCase currentMax = caseBase.get(0);
+
+        for(RetrievalResult r: eval) {
+            System.out.println("TELL ME THE R VALUE" + r.getEval());
+            if(r.getEval() > maxSim) {
+                currentMax = r.get_case();
+                maxSim = r.getEval();
+            }
+        }
+
+        System.out.println("poison case" + cbrCase);
+        System.out.println("edible case" + currentMax);
+
+        _fortioriCase = new ArrayList<>();
+        _fortioriCase.add(currentMax);
+        _fortioriCase.add(cbrCase);
+    }
+
     public CaseComponent calculateSolution(Collection<RetrievalResult> cases, int k) {
         MushroomSolution solution;
         Iterator<RetrievalResult> iterator = cases.iterator();
@@ -307,6 +352,10 @@ public class MushroomKLECBR implements KLECBR {
             klecbr.cycle(query);
             System.out.println("Solution of the case is: " + klecbr.getSolution().is_isPoisonous());
             klecbr.postCycle();
+            for(CBRCase fcases: klecbr._fortioriCase) {
+                MushroomSolution ms = (MushroomSolution) fcases.getSolution();
+                System.out.println("AN E and a P"+ ms.is_isPoisonous());
+            }
 
         } catch (Exception var6) {
             LogFactory.getLog(MushroomKLECBR.class).error(var6);

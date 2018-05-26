@@ -3,12 +3,7 @@ package weka;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.CountDownLatch;
-
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.Logistic;
 import weka.core.Attribute;
@@ -55,6 +50,13 @@ public class LogisticRegression {
         return dataSet;
     }
 
+    /**
+     * This method sorts the coefficient retrieved from the training set. it sorts the data
+     * into a Hashmap of hash maps, where each attribute is sorted into the coefficients of
+     * their different types.
+     * @param instance
+     * @param coefficients
+     */
     public static void sortCoefficients(Instance instance, double[][] coefficients){
         _coefficients = new HashMap<>();
         int coefficientCount = 1;
@@ -76,6 +78,12 @@ public class LogisticRegression {
 
     }
 
+    /**
+     * This finds the odds ratio by comparing two cases
+     * @param queryCase
+     * @param explanationQuery
+     * @return
+     */
     public static HashMap<String, Double> findOddsRatio(Instance queryCase, Instance explanationQuery) {
 
         HashMap<String, Double> oddsRatios = new HashMap<>();

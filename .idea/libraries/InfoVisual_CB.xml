@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="InfoVisual-CB">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/jCOLIBRI2/lib/visualization/InfoVisual-CB.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

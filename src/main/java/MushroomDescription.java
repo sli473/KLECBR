@@ -1,6 +1,7 @@
 import jcolibri.cbrcore.Attribute;
+import jcolibri.cbrcore.CaseComponent;
 
-public class MushroomDescription implements jcolibri.cbrcore.CaseComponent {
+public class MushroomDescription implements CaseComponent {
 
     int _caseId;
     String _capShape;

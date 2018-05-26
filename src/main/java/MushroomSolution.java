@@ -1,3 +1,4 @@
+import jcolibri.cbrcore.CaseComponent;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
 
