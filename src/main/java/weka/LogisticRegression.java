@@ -21,9 +21,9 @@ import weka.filters.unsupervised.attribute.RemoveUseless;
  */
 public class LogisticRegression {
 
-    private static final String TRAINING_DATA_SET_FILENAME="/data/temp.arff";
-    private static final String TESTING_DATA_SET_FILENAME="/data/temp.arff";
-    private static final String PREDICTION_DATA_SET_FILENAME="/data/temp.arff";
+    private static final String TRAINING_DATA_SET_FILENAME="/data/localcasebase.arff";
+    private static final String TESTING_DATA_SET_FILENAME="/data/localcasebase.arff";
+    private static final String PREDICTION_DATA_SET_FILENAME="/data/localcasebase.arff";
 
     private static HashMap<String, HashMap<String, Double>> _coefficients;
 
