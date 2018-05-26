@@ -36,7 +36,7 @@ public class CaseBaseGenerator {
         } else {
             return "No File Chosen";
         }*/
-        return "/Users/samli/University/COMPSCI 760/Project Shit/KLECBR/data/small-test.csv";
+        return "/Users/samli/University/COMPSCI 760/Project Shit/MushromKLECBR/data/small-test.csv";
     }
 
     protected List<String> readCSV(String selectedFile) {
