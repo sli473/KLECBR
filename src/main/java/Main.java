@@ -135,7 +135,6 @@ public class Main {
                 System.out.println("Print false case" + rs);
             }
         }
-
         return res;
     }
 
