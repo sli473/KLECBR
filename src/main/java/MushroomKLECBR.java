@@ -22,6 +22,7 @@ public class MushroomKLECBR implements KLECBR {
     Connector _connector;
     CBRCaseBase _caseBase;
     Collection<CBRCase> localCaseBase;
+    MushroomSolution _solution;
 
     public static MushroomKLECBR getInstance() {
         if (_instance == null) {
@@ -66,6 +67,7 @@ public class MushroomKLECBR implements KLECBR {
         }
 
         localCaseBase = createLocalCaseBase(eval, 20);
+        _solution = (MushroomSolution)calculateSolution(eval, 20);
 
         Iterator var6 = localCaseBase.iterator();
 
@@ -255,6 +257,46 @@ public class MushroomKLECBR implements KLECBR {
         return query;
     }
 
+    public CaseComponent calculateSolution(Collection<RetrievalResult> cases, int k) {
+        MushroomSolution solution;
+        Iterator<RetrievalResult> iterator = cases.iterator();
+        int casesSupportingClassification = 0;
+        double supportingAccumulation = 0;
+        int casesAgainstClassification = 0;
+        double againstAccumulation = 0;
+        CBRCase currentCase;
+        MushroomSolution caseSolution = new MushroomSolution();
+        String isPoisonous;
+
+        while (iterator.hasNext() && (casesSupportingClassification < k || casesAgainstClassification < k)) {
+            RetrievalResult rs = iterator.next();
+            currentCase = rs.get_case();
+            caseSolution = (MushroomSolution) currentCase.getSolution();
+            isPoisonous = caseSolution.is_isPoisonous();
+            if (isPoisonous.equals("e") && casesSupportingClassification < k) {
+                supportingAccumulation += rs.getEval();
+                casesSupportingClassification++;
+                System.out.println("Print true case" + rs);
+            } else if (isPoisonous.equals("p") && casesAgainstClassification < k) {
+                againstAccumulation += rs.getEval();
+                casesAgainstClassification++;
+                System.out.println("Print false case" + rs);
+            }
+        }
+
+        if(supportingAccumulation > againstAccumulation) {
+            caseSolution.set_isPoisonous("e");
+        } else {
+            caseSolution.set_isPoisonous("p");
+        }
+
+        return caseSolution;
+    }
+
+    public MushroomSolution getSolution() {
+        return _solution;
+    }
+
     public static void main(String[] args) {
         MushroomKLECBR klecbr = getInstance();
 
@@ -263,6 +305,7 @@ public class MushroomKLECBR implements KLECBR {
             klecbr.preCycle();
             CBRQuery query = klecbr.createQuery();
             klecbr.cycle(query);
+            System.out.println("Solution of the case is: " + klecbr.getSolution().is_isPoisonous());
             klecbr.postCycle();
 
         } catch (Exception var6) {
