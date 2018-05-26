@@ -72,6 +72,7 @@ public class MushroomKLECBR implements KLECBR {
 
         _solution = (MushroomSolution)calculateSolution(eval, 20);
         localCaseBase = createLocalCaseBase(eval, 20);
+        _solution = (MushroomSolution)calculateSolution(eval, 20);
 
         Iterator var6 = localCaseBase.iterator();
 
@@ -84,26 +85,50 @@ public class MushroomKLECBR implements KLECBR {
 
         URL savedCaseBase = FileIO.findFile("data/localcasebase.arff");
         URL fileTemplate = FileIO.findFile("data/mushroomTemplate.arff");
+        URL outputFile = FileIO.findFile("data/output.arff");
+
+        CBRCase queryCase = new CBRCase();
+        queryCase.setDescription(cbrQuery.getDescription());
+        queryCase.setSolution(_solution);
 
         BufferedWriter bw;
+        BufferedWriter outputWriter;
         BufferedReader br;
 
+        ArrayList<CBRCase> outputCases = new ArrayList<>();
+        outputCases.add(queryCase);
+        outputCases.addAll(_fortioriCase);
+
         ArrayList<String> lines = getArffCases(localCaseBase);
+        ArrayList<String> outputStrings = getArffCases(outputCases);
         String line;
 
         try {
             br = new BufferedReader(new FileReader(fileTemplate.getFile()));
             bw = new BufferedWriter(new FileWriter(savedCaseBase.getFile()));
+            outputWriter = new BufferedWriter(new FileWriter(outputFile.getFile()));
+
+            outputWriter.write("");
             bw.write("");
             while((line = br.readLine()) != null) {
                 bw.append(line);
                 bw.newLine();
+                outputWriter.append(line);
+                outputWriter.newLine();
             }
             for(String cases : lines) {
                 bw.append(cases);
                 bw.newLine();
             }
+
+            for(String oStrings: outputStrings) {
+                outputWriter.append(oStrings);
+                outputWriter.newLine();
+            }
+
+            br.close();
             bw.close();
+            outputWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -177,6 +202,7 @@ public class MushroomKLECBR implements KLECBR {
                 casesAgainstClassification++;
                 System.out.println("Print false case" + rs);
             }
+
         }
 
         String solution = _solution.is_isPoisonous();
@@ -194,8 +220,6 @@ public class MushroomKLECBR implements KLECBR {
     @Override
     public ArrayList<String> getArffCases(Collection<CBRCase> localCaseBase) {
         ArrayList<String> arffText = new ArrayList<>();
-        localCaseBase.add(_fortioriCase.get(0));
-        localCaseBase.add(_fortioriCase.get(1));
         Iterator<CBRCase> caseIterator = localCaseBase.iterator();
         StringBuilder stringBuilder;
 

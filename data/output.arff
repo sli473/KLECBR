@@ -1,0 +1,30 @@
+@relation mushrooms
+
+@attribute isPoisonous {p,e}
+@attribute cap-shape {x,b,s,f,k,c}
+@attribute cap-surface {s,y,f,g}
+@attribute cap-color {n,y,w,g,e,p,b,u,c,r}
+@attribute bruises {t,f}
+@attribute odor {p,a,l,n,f,c,y,s,m}
+@attribute gill-attachment {f,a}
+@attribute gill-spacing {c,w}
+@attribute gill-size {n,b}
+@attribute gill-color {k,n,g,p,w,h,u,e,b,r,y,o}
+@attribute stalk-shape {e,t}
+@attribute stalk-root {e,c,b,r}
+@attribute stalk-surface-above-ring {s,f,k,y}
+@attribute stalk-surface-below-ring {s,f,y,k}
+@attribute stalk-color-above-ring {w,g,p,n,b,e,o,c,y}
+@attribute stalk-color-below-ring {w,p,g,b,n,e,y,o,c}
+@attribute veil-type {p}
+@attribute veil-color {w,n,o,y}
+@attribute ring-number {o,t,n}
+@attribute ring-type {p,e,l,f,n}
+@attribute spore-print-color {k,n,u,h,w,r,o,y,b}
+@attribute population {s,n,a,v,y,c}
+@attribute habitat {u,g,m,d,p,w,l}
+
+@data
+e,f,f,w,f,n,f,w,b,k,t,e,s,s,w,w,p,w,o,p,n,y,u
+e,f,f,n,f,n,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,y,u
+p,f,y,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,s,u
