@@ -1,0 +1,7 @@
+<DataBaseConfiguration>
+	<HibernateConfigFile>src/main/java/Mushroom/hibernate.cfg.xml</HibernateConfigFile>
+	<DescriptionMappingFile>src/main/java/Mushroom/MushroomDescription.hbm.xml</DescriptionMappingFile>
+	<DescriptionClassName>Mushroom.MushroomDescription</DescriptionClassName>
+	<SolutionMappingFile>MushroomSolution.hbm.xml</SolutionMappingFile>
+	<SolutionClassName>Mushroom.MushroomSolution</SolutionClassName>
+</DataBaseConfiguration>

@@ -1,3 +1,5 @@
+package Mushroom;
+
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbrcore.*;
 import jcolibri.connector.DataBaseConnector;
@@ -16,6 +18,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
+import KLECBR.KLECBR;
 
 public class MushroomKLECBR implements KLECBR {
     private static MushroomKLECBR _instance = null;
@@ -42,9 +46,9 @@ public class MushroomKLECBR implements KLECBR {
         HSQLDBserver.init();
         _caseBase = new LinealCaseBase();
         _connector = new DataBaseConnector();
-        URL url = FileIO.findFile("src/main/java/databaseconfig.xml");
+        URL url = FileIO.findFile("src/main/java/Mushroom/databaseconfig.xml");
         System.out.println("what is the url you found? " + url);
-        _connector.initFromXMLfile(FileIO.findFile("src/main/java/databaseconfig.xml"));
+        _connector.initFromXMLfile(FileIO.findFile("src/main/java/Mushroom/databaseconfig.xml"));
     }
 
     @Override

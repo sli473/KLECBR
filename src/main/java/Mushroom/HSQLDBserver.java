@@ -1,3 +1,5 @@
+package Mushroom;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
@@ -35,10 +37,10 @@ public class HSQLDBserver {
                 Class.forName("org.hsqldb.jdbcDriver");
                 PrintStream out = new PrintStream(new ByteArrayOutputStream());
                 Connection conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/mushroom_small", "sa", "");
-                SqlFile file = new SqlFile(new File(FileIO.findFile("src/main/java/bigmushroomData.sql").getFile()), false, new HashMap());
+                SqlFile file = new SqlFile(new File(FileIO.findFile("src/main/java/Mushroom/bigmushroomData.sql").getFile()), false, new HashMap());
                 file.execute(conn, out, out, true);
                 Connection connExt = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/mushroom_smallext", "sa", "");
-                SqlFile fileExt = new SqlFile(new File(FileIO.findFile("src/main/java/mushroom_smallext.sql").getFile()), false, new HashMap());
+                SqlFile fileExt = new SqlFile(new File(FileIO.findFile("src/main/java/Mushroom/mushroom_smallext.sql").getFile()), false, new HashMap());
                 fileExt.execute(connExt, out, out, true);
                 LogFactory.getLog(HSQLDBserver.class).info("Data base generation finished");
             } catch (Exception var5) {

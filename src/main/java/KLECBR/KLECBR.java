@@ -1,3 +1,5 @@
+package KLECBR;
+
 import jcolibri.cbraplications.StandardCBRApplication;
 import jcolibri.exception.ExecutionException;
 import jcolibri.cbrcore.CBRCaseBase;

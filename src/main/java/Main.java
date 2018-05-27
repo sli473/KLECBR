@@ -1,4 +1,6 @@
-import jcolibri.casebase.CachedLinealCaseBase;
+import Mushroom.HSQLDBserver;
+import Mushroom.MushroomDescription;
+import Mushroom.MushroomSolution;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCaseBase;
@@ -10,7 +12,6 @@ import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
 import jcolibri.method.retrieve.RetrievalResult;
-import jcolibri.method.retrieve.selection.SelectCases;
 import jcolibri.util.FileIO;
 
 import java.io.*;
@@ -21,7 +22,6 @@ import java.util.Iterator;
 
 import jcolibri.cbrcore.CBRCase;
 
-import jcolibri.method.retrieve.NNretrieval.similarity.StandardGlobalSimilarityFunction;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import weka.LogisticRegression;
 

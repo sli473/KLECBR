@@ -1,3 +1,5 @@
+package Mushroom;
+
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
 
