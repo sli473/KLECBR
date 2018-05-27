@@ -1,0 +1,14 @@
+@relation breastCancer
+
+@attribute ClumpThickness numeric
+@attribute UniformityofCellSize numeric
+@attribute UniformityofCellShape numeric
+@attribute MarginalAdhesion numeric
+@attribute SingleEpithelialCellSize numeric
+@attribute BareNuclei numeric
+@attribute BlandChromatin numeric
+@attribute NormalNucleoli numeric
+@attribute Mitoses numeric
+@attribute Class {2,4}
+
+@data

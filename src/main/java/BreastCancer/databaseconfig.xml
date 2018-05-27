@@ -1,0 +1,7 @@
+<DataBaseConfiguration>
+    <HibernateConfigFile>src/main/java/BreastCancer/hibernate.cfg.xml</HibernateConfigFile>
+    <DescriptionMappingFile>src/main/java/BreastCancer/CancerDescription.hbm.xml</DescriptionMappingFile>
+    <DescriptionClassName>BreastCancer.CancerDescription</DescriptionClassName>
+    <SolutionMappingFile>CancerSolution.hbm.xml</SolutionMappingFile>
+    <SolutionClassName>BreastCancer.CancerSolution</SolutionClassName>
+</DataBaseConfiguration>

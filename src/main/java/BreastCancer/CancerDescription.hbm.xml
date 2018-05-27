@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+    <class name="BreastCancer.CancerDescription" table="BreastCancer">
+
+        <id name="_caseId" column="caseId">
+            <generator class="native"/>
+        </id>
+        <property name="_clumpThickness" column="clumpThickness" />
+        <property name="_uniformityOfCellSize" column="uniformityOfCellSize" />
+        <property name="_uniformityOfCellShape" column="uniformityOfCellShape" />
+        <property name="_marginalAdhesion" column="marginalAdhesion" />
+        <property name="_singleEpithelialCellSize" column="singleEpithelialCellSize" />
+        <property name="_bareNuclei" column="bareNuclei" />
+        <property name="_blandChromatin" column="blandChromatin" />
+        <property name="_normalNucleoli" column="normalNucleoli" />
+        <property name="_mitoses" column="mitoses" />
+
+    </class>
+</hibernate-mapping>

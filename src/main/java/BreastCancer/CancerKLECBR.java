@@ -1,51 +1,48 @@
-package Iris;
+package BreastCancer;
 
 import KLECBR.KLECBR;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbrcore.*;
+import jcolibri.connector.DataBaseConnector;
 import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.RetrievalResult;
-import jcolibri.connector.DataBaseConnector;
 import jcolibri.util.FileIO;
 import org.apache.commons.logging.LogFactory;
 import weka.LogisticRegression;
 
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.net.URL;
 import java.util.Iterator;
 
-
-public class IrisKLECBR implements KLECBR {
-    private static IrisKLECBR _instance = null;
+public class CancerKLECBR implements KLECBR {
+    private static CancerKLECBR _instance = null;
     Connector _connector;
     CBRCaseBase _caseBase;
     Collection<CBRCase> localCaseBase;
-    IrisSolution _solution;
+    CancerSolution _solution;
     ArrayList<CBRCase> _fortioriCase;
     NNConfig _simConfig;
 
-    public static IrisKLECBR getInstance(){
+    public static CancerKLECBR getInstance(){
         if(_instance == null) {
-            _instance = new IrisKLECBR();
+            _instance = new CancerKLECBR();
         }
 
         return _instance;
     }
-
 
     @Override
     public void configure() throws ExecutionException {
         HSQLDBserver.init();
         _caseBase = new LinealCaseBase();
         _connector = new DataBaseConnector();
-        URL url = FileIO.findFile("src/main/java/Iris/databaseconfig.xml");
+        URL url = FileIO.findFile("src/main/java/BreastCancer/databaseconfig.xml");
         _connector.initFromXMLfile(url);
     }
 
@@ -72,21 +69,21 @@ public class IrisKLECBR implements KLECBR {
             System.out.println(help);
         }
 
-        _solution = (IrisSolution)calculateSolution(eval, 20);
+        _solution = (CancerSolution) calculateSolution(eval, 20);
         localCaseBase = createLocalCaseBase(eval, 20);
 
         Iterator var6 = localCaseBase.iterator();
 
         while(var6.hasNext()) {
             CBRCase nse = (CBRCase)var6.next();
-            IrisSolution ms =(IrisSolution) nse.getSolution();
-            System.out.println(ms.get_species());
+            CancerSolution ms =(CancerSolution) nse.getSolution();
+            System.out.println(ms.get_classification());
             System.out.println(nse);
         }
 
-        URL savedCaseBase = FileIO.findFile("data/iris/localcasebase.arff");
-        URL fileTemplate = FileIO.findFile("data/iris/irisTemplate.arff");
-        URL outputFile = FileIO.findFile("data/iris/output.arff");
+        URL savedCaseBase = FileIO.findFile("data/breastcancer/localcasebase.arff");
+        URL fileTemplate = FileIO.findFile("data/breastcancer/breastCancerTemplate.arff");
+        URL outputFile = FileIO.findFile("data/breastcancer/output.arff");
 
         CBRCase queryCase = new CBRCase();
         queryCase.setDescription(cbrQuery.getDescription());
@@ -151,36 +148,41 @@ public class IrisKLECBR implements KLECBR {
     @Override
     public void setUpNNConfig(NNConfig simConfig) {
         simConfig.setDescriptionSimFunction(new Average());
-        simConfig.addMapping(new Attribute("_sepalLengthCm", IrisDescription.class), new Interval(3.6D));
-        simConfig.addMapping(new Attribute("_sepalWidthCm", IrisDescription.class), new Interval(2.4D));
-        simConfig.addMapping(new Attribute("_petalLengthCm", IrisDescription.class), new Interval(5.9D));
-        simConfig.addMapping(new Attribute("_petalWidthCm", IrisDescription.class), new Interval(2.4D));
+        simConfig.addMapping(new Attribute("_clumpThickness", CancerDescription.class), new Interval(10));
+        simConfig.addMapping(new Attribute("_uniformityOfCellSize", CancerDescription.class), new Interval(10));
+        simConfig.addMapping(new Attribute("_uniformityOfCellShape", CancerDescription.class), new Interval(10));
+        simConfig.addMapping(new Attribute("_marginalAdhesion", CancerDescription.class), new Interval(10));
+        simConfig.addMapping(new Attribute("_singleEpithelialCellSize", CancerDescription.class), new Interval(10));
+        simConfig.addMapping(new Attribute("_bareNuclei", CancerDescription.class), new Interval(10));
+        simConfig.addMapping(new Attribute("_blandChromatin", CancerDescription.class), new Interval(10));
+        simConfig.addMapping(new Attribute("_normalNucleoli", CancerDescription.class), new Interval(10));
+        simConfig.addMapping(new Attribute("_mitoses", CancerDescription.class), new Interval(10));
     }
 
     @Override
     public Collection<CBRCase> createLocalCaseBase(Collection<RetrievalResult> cases, int k) {
         ArrayList<CBRCase> res = new ArrayList();
-        ArrayList<CBRCase> setosa = new ArrayList();
-        ArrayList<CBRCase> versicolor = new ArrayList();
+        ArrayList<CBRCase> benign = new ArrayList();
+        ArrayList<CBRCase> malignant = new ArrayList();
         Iterator<RetrievalResult> iterator = cases.iterator();
         int casesSupportingClassification = 0;
         int casesAgainstClassification = 0;
         CBRCase currentCase;
-        IrisSolution caseSolution;
-        String isSetosa;
+        CancerSolution caseSolution;
+        int isBenign;
 
         while (iterator.hasNext() && (casesSupportingClassification < k || casesAgainstClassification < k)) {
             RetrievalResult rs = iterator.next();
             currentCase = rs.get_case();
-            caseSolution = (IrisSolution) currentCase.getSolution();
-            isSetosa = caseSolution.get_species();
-            if (isSetosa.equals("Iris-setosa") && casesSupportingClassification < k) {
-                setosa.add(currentCase);
+            caseSolution = (CancerSolution) currentCase.getSolution();
+            isBenign = caseSolution.get_classification();
+            if (isBenign == 2 && casesSupportingClassification < k) {
+                benign.add(currentCase);
                 res.add(currentCase);
                 casesSupportingClassification++;
                 System.out.println("Print true case" + rs);
-            } else if (isSetosa.equals("Iris-versicolor") && casesAgainstClassification < k) {
-                versicolor.add(currentCase);
+            } else if (isBenign == 4 && casesAgainstClassification < k) {
+                malignant.add(currentCase);
                 res.add(currentCase);
                 casesAgainstClassification++;
                 System.out.println("Print false case" + rs);
@@ -188,14 +190,13 @@ public class IrisKLECBR implements KLECBR {
 
         }
 
-        String solution = _solution.get_species();
+        int solution = _solution.get_classification();
 
-        if (solution.equals("Iris-setosa")) {
-            fortioriCase(setosa, versicolor.get(0));
+        if (solution == 2) {
+            fortioriCase(benign, malignant.get(0));
         } else {
-            fortioriCase(versicolor, setosa.get(0));
+            fortioriCase(malignant, benign.get(0));
         }
-
 
         return res;
     }
@@ -208,14 +209,19 @@ public class IrisKLECBR implements KLECBR {
 
         while(caseIterator.hasNext()) {
             CBRCase cbrCase = caseIterator.next();
-            IrisSolution solution = (IrisSolution)cbrCase.getSolution();
-            IrisDescription description = (IrisDescription)cbrCase.getDescription();
+            CancerSolution solution = (CancerSolution)cbrCase.getSolution();
+            CancerDescription description = (CancerDescription)cbrCase.getDescription();
             stringBuilder = new StringBuilder();
-            stringBuilder.append(description.get_sepalLengthCm() + ",");
-            stringBuilder.append(description.get_sepalWidthCm() + ",");
-            stringBuilder.append(description.get_petalLengthCm() + ",");
-            stringBuilder.append(description.get_petalWidthCm() + ",");
-            stringBuilder.append(solution.get_species());
+            stringBuilder.append(description.get_clumpThickness() + ",");
+            stringBuilder.append(description.get_uniformityOfCellSize() + ",");
+            stringBuilder.append(description.get_uniformityOfCellShape() + ",");
+            stringBuilder.append(description.get_marginalAdhesion() + ",");
+            stringBuilder.append(description.get_singleEpithelialCellSize() + ",");
+            stringBuilder.append(description.get_bareNuclei() + ",");
+            stringBuilder.append(description.get_blandChromatin() + ",");
+            stringBuilder.append(description.get_normalNucleoli() + ",");
+            stringBuilder.append(description.get_mitoses() + ",");
+            stringBuilder.append(solution.get_classification());
             arffText.add(stringBuilder.toString());
         }
         return arffText;
@@ -228,21 +234,26 @@ public class IrisKLECBR implements KLECBR {
 
         while(var3.hasNext()) {
             CBRCase c = (CBRCase)var3.next();
-            IrisDescription d = (IrisDescription) c.getDescription();
+            CancerDescription d = (CancerDescription) c.getDescription();
             System.out.println(d.get_caseId());
-            IrisSolution s = (IrisSolution) c.getSolution();
-            System.out.println("solution"+ s.get_species());
+            CancerSolution s = (CancerSolution) c.getSolution();
+            System.out.println("solution"+ s.get_classification());
             System.out.println(c);
         }
     }
 
     @Override
     public CBRQuery createQuery() {
-        IrisDescription queryDesc = new IrisDescription();
-        queryDesc.set_sepalLengthCm(5.1);
-        queryDesc.set_sepalWidthCm(3.5);
-        queryDesc.set_petalLengthCm(1.4);
-        queryDesc.set_petalWidthCm(0.2);
+        CancerDescription queryDesc = new CancerDescription();
+        queryDesc.set_clumpThickness(4);
+        queryDesc.set_uniformityOfCellSize(8);
+        queryDesc.set_uniformityOfCellShape(6);
+        queryDesc.set_marginalAdhesion(4);
+        queryDesc.set_singleEpithelialCellSize(3);
+        queryDesc.set_bareNuclei(4);
+        queryDesc.set_blandChromatin(10);
+        queryDesc.set_normalNucleoli(6);
+        queryDesc.set_mitoses(1);
         CBRQuery query = new CBRQuery();
         query.setDescription(queryDesc);
         return query;
@@ -278,19 +289,19 @@ public class IrisKLECBR implements KLECBR {
         int casesAgainstClassification = 0;
         double againstAccumulation = 0;
         CBRCase currentCase;
-        IrisSolution caseSolution = new IrisSolution();
-        String isSetosa;
+        CancerSolution caseSolution = new CancerSolution();
+        int isBenign;
 
         while (iterator.hasNext() && (casesSupportingClassification < k || casesAgainstClassification < k)) {
             RetrievalResult rs = iterator.next();
             currentCase = rs.get_case();
-            caseSolution = (IrisSolution) currentCase.getSolution();
-            isSetosa = caseSolution.get_species();
-            if (isSetosa.equals("Iris-setosa") && casesSupportingClassification < k) {
+            caseSolution = (CancerSolution) currentCase.getSolution();
+            isBenign = caseSolution.get_classification();
+            if (isBenign == 2 && casesSupportingClassification < k) {
                 supportingAccumulation += rs.getEval();
                 casesSupportingClassification++;
                 System.out.println("Print true case" + rs);
-            } else if (isSetosa.equals("Iris-versicolor") && casesAgainstClassification < k) {
+            } else if (isBenign == 4 && casesAgainstClassification < k) {
                 againstAccumulation += rs.getEval();
                 casesAgainstClassification++;
                 System.out.println("Print false case" + rs);
@@ -298,36 +309,36 @@ public class IrisKLECBR implements KLECBR {
         }
 
         if(supportingAccumulation > againstAccumulation) {
-            caseSolution.set_species("Iris-setosa");
+            caseSolution.set_classification(2);
         } else {
-            caseSolution.set_species("Iris-versicolor");
+            caseSolution.set_classification(4);
         }
 
         return caseSolution;
     }
 
     @Override
-    public IrisSolution getSolution() {
+    public CancerSolution getSolution() {
         return _solution;
     }
 
     public static void main(String[] args) {
-        IrisKLECBR klecbr = getInstance();
+        CancerKLECBR klecbr = getInstance();
 
         try {
             klecbr.configure();
             klecbr.preCycle();
             CBRQuery query = klecbr.createQuery();
             klecbr.cycle(query);
-            System.out.println("Solution of the case is: " + klecbr.getSolution().get_species());
+            System.out.println("Solution of the case is: " + klecbr.getSolution().get_classification());
             klecbr.postCycle();
-            for(CBRCase fcases: klecbr._fortioriCase) {
-                IrisSolution ms = (IrisSolution) fcases.getSolution();
-                System.out.println("AN E and a P"+ ms.get_species());
+            for (CBRCase fcases : klecbr._fortioriCase) {
+                CancerSolution ms = (CancerSolution) fcases.getSolution();
+                System.out.println("AN E and a P " + ms.get_classification());
             }
 
         } catch (Exception var6) {
-            LogFactory.getLog(IrisKLECBR.class).error(var6);
+            LogFactory.getLog(CancerKLECBR.class).error(var6);
         }
     }
 }
