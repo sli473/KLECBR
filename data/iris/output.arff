@@ -1,0 +1,12 @@
+@relation iris
+
+@attribute SepalLengthCm numeric
+@attribute SepalWidthCm numeric
+@attribute PetalLengthCm numeric
+@attribute PetalWidthCm numeric
+@attribute Species {Iris-setosa,Iris-versicolor}
+
+@data
+0,5.1,3.5,1.4,0.2,Iris-setosa
+12,5.1,3.3,1.7,0.5,Iris-setosa
+47,5.0,2.3,3.3,1.0,Iris-versicolor

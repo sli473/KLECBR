@@ -1,0 +1,9 @@
+@relation iris
+
+@attribute SepalLengthCm numeric
+@attribute SepalWidthCm numeric
+@attribute PetalLengthCm numeric
+@attribute PetalWidthCm numeric
+@attribute Species {Iris-setosa,Iris-versicolor}
+
+@data

@@ -1,0 +1,7 @@
+<DataBaseConfiguration>
+    <HibernateConfigFile>src/main/java/Iris/hibernate.cfg.xml</HibernateConfigFile>
+    <DescriptionMappingFile>src/main/java/Iris/IrisDescription.hbm.xml</DescriptionMappingFile>
+    <DescriptionClassName>Iris.IrisDescription</DescriptionClassName>
+    <SolutionMappingFile>IrisSolution.hbm.xml</SolutionMappingFile>
+    <SolutionClassName>Iris.IrisSolution</SolutionClassName>
+</DataBaseConfiguration>

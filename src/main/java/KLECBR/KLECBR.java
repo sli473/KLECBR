@@ -8,6 +8,8 @@ import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.cbrcore.CBRCase;
 import java.util.ArrayList;
 import jcolibri.cbrcore.CBRQuery;
+import jcolibri.cbrcore.CaseComponent;
+import jcolibri.method.retrieve.RetrievalResult;
 
 import java.util.Collection;
 
@@ -31,5 +33,11 @@ public interface KLECBR extends StandardCBRApplication {
     void printCaseBase();
 
     CBRQuery createQuery();
+
+    void fortioriCase(ArrayList<CBRCase> caseBase, CBRCase cbrCase);
+
+    CaseComponent calculateSolution(Collection<RetrievalResult> cases, int k);
+
+    CaseComponent getSolution();
 
 }
