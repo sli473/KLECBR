@@ -30,6 +30,8 @@ public class LogisticRegression {
     private static HashMap<String, HashMap<String, Double>> _coefficientsCategorical;
     private static HashMap<String, Double> _coefficientsNumeric;
 
+    private static int _classIndex;
+
     /**
      * This method is to load the data set.
      * Currently temporarily until we find out how to parse in raw data from CBR
@@ -39,7 +41,7 @@ public class LogisticRegression {
      */
     public static Instances getDataSet(String fileName) throws IOException {
 
-        int classIndex = 4;
+        _classIndex = 4;
         /** the arffloader to load the arff file */
         ArffLoader loader = new ArffLoader();
 
@@ -52,7 +54,7 @@ public class LogisticRegression {
          */
         Instances dataSet = loader.getDataSet();
         /** set the index based on the data given in the arff files */
-        dataSet.setClassIndex(classIndex);
+        dataSet.setClassIndex(_classIndex);
         return dataSet;
     }
 
@@ -133,20 +135,22 @@ public class LogisticRegression {
         double queryCoefficient;
         double explanationCoefficient;
 
-        for (int i = 1; i < queryCase.numAttributes(); i++) {
-            Attribute attribute = queryCase.attribute(i);
-            try {
-                queryCoefficient = _coefficientsNumeric.get(attribute);
-            } catch (NullPointerException e) {
-                queryCoefficient = 0;
+        for (int i = 0; i < queryCase.numAttributes(); i++) {
+            if (i != _classIndex) {
+                Attribute attribute = queryCase.attribute(i);
+                try {
+                    queryCoefficient = _coefficientsNumeric.get(attribute.name());
+                } catch (NullPointerException e) {
+                    queryCoefficient = 0;
+                }
+                try {
+                    explanationCoefficient = _coefficientsNumeric.get(attribute.name());
+                } catch (NullPointerException e) {
+                    explanationCoefficient = 0;
+                }
+                double oddsRatio = Math.exp(queryCoefficient * queryCase.value(attribute) - explanationCoefficient * explanationQuery.value(attribute));
+                oddsRatios.put(attribute.name(), oddsRatio);
             }
-            try {
-                explanationCoefficient = _coefficientsNumeric.get(attribute);
-            } catch (NullPointerException e) {
-                explanationCoefficient = 0;
-            }
-            double oddsRatio = Math.exp(queryCoefficient - explanationCoefficient);
-            oddsRatios.put(attribute.name(), oddsRatio);
         }
         return oddsRatios;
     }

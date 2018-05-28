@@ -105,7 +105,7 @@ public class Main {
 
         LogisticRegression logisticRegression = new LogisticRegression();
         try {
-            logisticRegression.process();
+            logisticRegression.processCategorical();
         } catch (Exception e) {
             e.printStackTrace();
         }

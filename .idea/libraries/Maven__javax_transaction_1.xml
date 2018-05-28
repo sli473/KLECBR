@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="Maven: javax:transaction:1">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/javax/transaction/1/transaction-1.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC>
       <root url="jar://$MAVEN_REPOSITORY$/javax/transaction/1/transaction-1-javadoc.jar!/" />
     </JAVADOC>

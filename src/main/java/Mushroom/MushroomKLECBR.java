@@ -139,7 +139,7 @@ public class MushroomKLECBR implements KLECBR {
 
         LogisticRegression logisticRegression = new LogisticRegression();
         try {
-            logisticRegression.process();
+            logisticRegression.processCategorical();
         } catch (Exception e) {
             e.printStackTrace();
         }

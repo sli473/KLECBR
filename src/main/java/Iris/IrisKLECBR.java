@@ -136,7 +136,7 @@ public class IrisKLECBR implements KLECBR {
 
         LogisticRegression logisticRegression = new LogisticRegression();
         try {
-            logisticRegression.process();
+            logisticRegression.processNumeric();
         } catch (Exception e) {
             e.printStackTrace();
         }

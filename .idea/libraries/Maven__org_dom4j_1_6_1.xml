@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="Maven: org:dom4j:1.6.1">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/dom4j/1.6.1/dom4j-1.6.1.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC>
       <root url="jar://$MAVEN_REPOSITORY$/org/dom4j/1.6.1/dom4j-1.6.1-javadoc.jar!/" />
     </JAVADOC>
