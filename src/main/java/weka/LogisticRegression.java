@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import weka.classifiers.Evaluation;
 import weka.classifiers.functions.Logistic;
 import weka.core.Attribute;
 import weka.core.Instance;
@@ -17,15 +16,19 @@ import weka.filters.unsupervised.attribute.RemoveUseless;
 /**
  * CODE ADAPTED FROM https://tech.io/playgrounds/4821/machine-learning-with-java---part-2-logistic-regression
  * BY Gowgi
+ *
+ * NOTE: When changing datasets, set the class, and when doing coefficient stuff, don't forget to configure it depending on the
+ * index of the class
  * Created by sueyeon on 19/05/18.
  */
 public class LogisticRegression {
 
-    private static final String TRAINING_DATA_SET_FILENAME="/data/localcasebase.arff";
-    private static final String TESTING_DATA_SET_FILENAME="/data/localcasebase.arff";
-    private static final String PREDICTION_DATA_SET_FILENAME="/data/localcasebase.arff";
+    private static final String TRAINING_DATA_SET_FILENAME="/data/iris/iris.arff";
+    private static final String TESTING_DATA_SET_FILENAME="/data/iris/iris.arff";
+    private static final String ODDS_RATIO_DATA_SET_FILENAME="/data/iris/iris.arff";
 
-    private static HashMap<String, HashMap<String, Double>> _coefficients;
+    private static HashMap<String, HashMap<String, Double>> _coefficientsCategorical;
+    private static HashMap<String, Double> _coefficientsNumeric;
 
     /**
      * This method is to load the data set.
@@ -36,7 +39,7 @@ public class LogisticRegression {
      */
     public static Instances getDataSet(String fileName) throws IOException {
 
-        int classIndex = 0;
+        int classIndex = 4;
         /** the arffloader to load the arff file */
         ArffLoader loader = new ArffLoader();
 
@@ -60,8 +63,8 @@ public class LogisticRegression {
      * @param instances
      * @param coefficients
      */
-    public static void sortCoefficients(Instances instances, double[][] coefficients){
-        _coefficients = new HashMap<>();
+    public static void sortCoefficientsCategorical(Instances instances, double[][] coefficients){
+        _coefficientsCategorical = new HashMap<>();
         ArrayList<Attribute> attributeList = obtainCoefficientAttributes(instances);
         int coefficientCount = 1;
         for (int i = 1; i < attributeList.size(); i++) {
@@ -76,7 +79,19 @@ public class LogisticRegression {
                     coefficientCount++;
                 }
             }
-            _coefficients.put(attribute.name(), variables);
+            _coefficientsCategorical.put(attribute.name(), variables);
+        }
+
+    }
+
+    public static void sortCoefficientsNumeric(Instances instances, double[][] coefficients){
+        _coefficientsNumeric = new HashMap<>();
+        ArrayList<Attribute> attributeList = obtainCoefficientAttributes(instances);
+        int coefficientCount = 1;
+        for (int i = 0; i < attributeList.size() - 1; i++) {
+            Attribute attribute = attributeList.get(i);
+            _coefficientsNumeric.put(attribute.name(), coefficients[coefficientCount][0]);
+            coefficientCount++;
         }
 
     }
@@ -87,7 +102,7 @@ public class LogisticRegression {
      * @param explanationQuery
      * @return
      */
-    public static HashMap<String, Double> findOddsRatio(Instance queryCase, Instance explanationQuery) {
+    public static HashMap<String, Double> findOddsRatioCategorical(Instance queryCase, Instance explanationQuery) {
 
         HashMap<String, Double> oddsRatios = new HashMap<>();
         double queryCoefficient;
@@ -95,12 +110,39 @@ public class LogisticRegression {
 
         for (int i = 1; i < queryCase.numAttributes(); i++) {
             Attribute attribute = queryCase.attribute(i);
-            HashMap<String, Double> attributeValues = _coefficients.get(attribute.name());
+            HashMap<String, Double> attributeValues = _coefficientsCategorical.get(attribute.name());
             try {
                 queryCoefficient = attributeValues.get(queryCase.stringValue(i));
-                explanationCoefficient = attributeValues.get(explanationQuery.stringValue(i));
             } catch (NullPointerException e) {
                 queryCoefficient = 0;
+            }
+            try {
+                explanationCoefficient = attributeValues.get(explanationQuery.stringValue(i));
+            } catch (NullPointerException e) {
+                explanationCoefficient = 0;
+            }
+            double oddsRatio = Math.exp(queryCoefficient - explanationCoefficient);
+            oddsRatios.put(attribute.name(), oddsRatio);
+        }
+        return oddsRatios;
+    }
+
+    public static HashMap<String, Double> findOddsRatioNumeric(Instance queryCase, Instance explanationQuery) {
+
+        HashMap<String, Double> oddsRatios = new HashMap<>();
+        double queryCoefficient;
+        double explanationCoefficient;
+
+        for (int i = 1; i < queryCase.numAttributes(); i++) {
+            Attribute attribute = queryCase.attribute(i);
+            try {
+                queryCoefficient = _coefficientsNumeric.get(attribute);
+            } catch (NullPointerException e) {
+                queryCoefficient = 0;
+            }
+            try {
+                explanationCoefficient = _coefficientsNumeric.get(attribute);
+            } catch (NullPointerException e) {
                 explanationCoefficient = 0;
             }
             double oddsRatio = Math.exp(queryCoefficient - explanationCoefficient);
@@ -130,37 +172,71 @@ public class LogisticRegression {
      *
      * @throws Exception
      */
-    public static void process() throws Exception {
+    public static void processCategorical() throws Exception {
 
         ArrayList<Instance> fortioriCases = new ArrayList<>();
-        Instance predicationForCase = getDataSet(PREDICTION_DATA_SET_FILENAME).get(1);
-        Instance predicationAgainstCase = getDataSet(PREDICTION_DATA_SET_FILENAME).lastInstance();
+        Instance predicationForCase = getDataSet(ODDS_RATIO_DATA_SET_FILENAME).get(1);
+        Instance predicationAgainstCase = getDataSet(ODDS_RATIO_DATA_SET_FILENAME).lastInstance();
         fortioriCases.add(predicationForCase);
         fortioriCases.add(predicationAgainstCase);
-        Instance queryCase = getDataSet(TESTING_DATA_SET_FILENAME).firstInstance();
-
+        Instance queryCase = getDataSet(ODDS_RATIO_DATA_SET_FILENAME).firstInstance();
 
         Instances trainingDataSet = getDataSet(TRAINING_DATA_SET_FILENAME);
         Instances testingDataSet = getDataSet(TESTING_DATA_SET_FILENAME);
         Logistic classifier = new Logistic();
         classifier.buildClassifier(trainingDataSet);
 
+        System.out.println(classifier);
+
         double[][] coefficients = classifier.coefficients();
 
         obtainCoefficientAttributes(trainingDataSet);
 
-        sortCoefficients(trainingDataSet, coefficients);
+        sortCoefficientsCategorical(trainingDataSet, coefficients);
 
-
-        Evaluation eval = new Evaluation(trainingDataSet);
-        eval.evaluateModel(classifier, testingDataSet);
 //        double value = classifier.classifyInstance(predicationCase);
 
-        HashMap<String, Double> oddsRatioFor = findOddsRatio(queryCase, predicationForCase);
+        HashMap<String, Double> oddsRatioFor = findOddsRatioCategorical(queryCase, predicationForCase);
         System.out.println("===========OODS RATIO FOR=========");
+        System.out.println("");
         System.out.println(oddsRatioFor);
 
-        HashMap<String, Double> oddsRatioAgainst = findOddsRatio(queryCase, predicationAgainstCase);
+        HashMap<String, Double> oddsRatioAgainst = findOddsRatioCategorical(queryCase, predicationAgainstCase);
+        System.out.println("===========OODS RATIO AGAINST=========");
+        System.out.println(oddsRatioAgainst);
+
+//        /** Prediction Output */
+//        System.out.println(value);
+    }
+
+    public static void processNumeric() throws Exception {
+
+        ArrayList<Instance> fortioriCases = new ArrayList<>();
+        Instance predicationForCase = getDataSet(ODDS_RATIO_DATA_SET_FILENAME).get(1);
+        Instance predicationAgainstCase = getDataSet(ODDS_RATIO_DATA_SET_FILENAME).lastInstance();
+        fortioriCases.add(predicationForCase);
+        fortioriCases.add(predicationAgainstCase);
+        Instance queryCase = getDataSet(ODDS_RATIO_DATA_SET_FILENAME).firstInstance();
+
+        Instances trainingDataSet = getDataSet(TRAINING_DATA_SET_FILENAME);
+        Instances testingDataSet = getDataSet(TESTING_DATA_SET_FILENAME);
+        Logistic classifier = new Logistic();
+        classifier.buildClassifier(trainingDataSet);
+
+        System.out.println(classifier);
+
+        double[][] coefficients = classifier.coefficients();
+
+        obtainCoefficientAttributes(trainingDataSet);
+
+        sortCoefficientsNumeric(trainingDataSet, coefficients);
+
+        HashMap<String, Double> oddsRatioFor = findOddsRatioNumeric(queryCase, predicationForCase);
+        System.out.println("===========OODS RATIO FOR=========");
+        System.out.println("");
+        System.out.println(oddsRatioFor);
+
+        HashMap<String, Double> oddsRatioAgainst = findOddsRatioNumeric(queryCase, predicationAgainstCase);
         System.out.println("===========OODS RATIO AGAINST=========");
         System.out.println(oddsRatioAgainst);
 
