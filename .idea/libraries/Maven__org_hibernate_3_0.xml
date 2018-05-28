@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="Maven: org:hibernate:3.0">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/3.0/hibernate-3.0.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC>
       <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/3.0/hibernate-3.0-javadoc.jar!/" />
     </JAVADOC>
