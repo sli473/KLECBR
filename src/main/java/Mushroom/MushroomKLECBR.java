@@ -17,6 +17,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import KLECBR.KLECBR;
@@ -137,12 +138,6 @@ public class MushroomKLECBR implements KLECBR {
             e.printStackTrace();
         }
 
-        LogisticRegression logisticRegression = new LogisticRegression();
-        try {
-            logisticRegression.processCategorical();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -387,6 +382,19 @@ public class MushroomKLECBR implements KLECBR {
 
         } catch (Exception var6) {
             LogFactory.getLog(MushroomKLECBR.class).error(var6);
+        }
+
+        LogisticRegression logisticRegression = new LogisticRegression();
+        ArrayList<HashMap<String, Double>> ratios;
+
+        try {
+            ratios = logisticRegression.processCategorical(
+                    "/data/iris/localcasebase.arff",
+                    "/data/iris/output.arff",
+                    0
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
