@@ -12,7 +12,7 @@ Mitoses							1
 Classification for Case: malignant
 Fortiori Case:
 Features:
-Clump Thickness					8
+Clump Thickness		?			8
 Bland Chromatin					7
 Single Epithelial Cell Size		3
 Uniformity Of Cell Size			9
