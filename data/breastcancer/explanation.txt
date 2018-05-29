@@ -1,0 +1,43 @@
+Query Case:
+Features:
+Clump Thickness					4
+Bland Chromatin					10
+Single Epithelial Cell Size		3
+Uniformity Of Cell Size			8
+Marginal Adhesion				4
+Uniformity Of Cell Shape		6
+Bare Nuclei						4
+Normal Nucleoli					6
+Mitoses							1
+Classification for Case: malignant
+Fortiori Case:
+Features:
+Clump Thickness		?			8
+Bland Chromatin					7
+Single Epithelial Cell Size		3
+Uniformity Of Cell Size			9
+Marginal Adhesion				5
+Uniformity Of Cell Shape		9
+Bare Nuclei						5
+Normal Nucleoli					7
+Mitoses							1
+Classification for Case: malignant
+
+A lower Uniformity Of Cell Shape Value supports the classification of:malignant
+Because the query cases'Uniformity Of Cell Shape value is lower than the fortiori caseit does support the classification
+A lower Bare Nuclei Value supports the classification of:malignant
+Because the query cases'Bare Nuclei value is lower than the fortiori caseit does support the classification
+A lower Single Epithelial Cell Size Value does not support the classification of: malignant
+Because the query cases'Single Epithelial Cell Size value is lower than the fortiori caseit does not support the classification
+A lower Clump Thickness Value does not support the classification of: malignant
+Because the query cases'Clump Thickness value is lower than the fortiori caseit does not support the classification
+A lower Mitoses Value does not support the classification of: malignant
+Because the query cases'Mitoses value is lower than the fortiori caseit does not support the classification
+A lower Uniformity Of Cell Size Value supports the classification of:malignant
+Because the query cases'Uniformity Of Cell Size value is lower than the fortiori caseit does support the classification
+A lower Marginal Adhesion Value supports the classification of:malignant
+Because the query cases'Marginal Adhesion value is lower than the fortiori caseit does support the classification
+A higher Bland Chromatin Value does not support the classfication of: malignant
+Because the query cases'Bland Chromatin value is higher than the fortiori caseit does not support the classification
+A lower Normal Nucleoli Value does not support the classification of: malignant
+Because the query cases'Normal Nucleoli value is lower than the fortiori caseit does not support the classification

@@ -1,9 +1,11 @@
 package BreastCancer;
 
+import KLECBR.KLECaseComponent;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
+import java.util.HashMap;
 
-public class CancerDescription implements CaseComponent{
+public class CancerDescription implements KLECaseComponent{
 
     int _caseId;
     int _clumpThickness;
@@ -101,5 +103,22 @@ public class CancerDescription implements CaseComponent{
     @Override
     public Attribute getIdAttribute() {
         return new Attribute("_caseId", this.getClass());
+    }
+
+    @Override
+    public HashMap<String, String> getHashMap() {
+        HashMap<String, String> hm = new HashMap<>();
+
+        hm.put("Clump Thickness", Integer.toString(_clumpThickness));
+        hm.put("Uniformity Of Cell Size", Integer.toString(_uniformityOfCellSize));
+        hm.put("Uniformity Of Cell Shape", Integer.toString(_uniformityOfCellShape));
+        hm.put("Marginal Adhesion", Integer.toString(_marginalAdhesion));
+        hm.put("Single Epithelial Cell Size", Integer.toString(_singleEpithelialCellSize));
+        hm.put("Bare Nuclei", Integer.toString(_bareNuclei));
+        hm.put("Bland Chromatin", Integer.toString(_blandChromatin));
+        hm.put("Normal Nucleoli", Integer.toString(_normalNucleoli));
+        hm.put("Mitoses", Integer.toString(_mitoses));
+
+        return hm;
     }
 }

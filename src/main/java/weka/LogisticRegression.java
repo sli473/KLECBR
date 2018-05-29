@@ -23,9 +23,9 @@ import weka.filters.unsupervised.attribute.RemoveUseless;
  */
 public class LogisticRegression {
 
-    private static final String TRAINING_DATA_SET_FILENAME="/data/iris/iris.arff";
-    private static final String TESTING_DATA_SET_FILENAME="/data/iris/iris.arff";
-    private static final String ODDS_RATIO_DATA_SET_FILENAME="/data/iris/iris.arff";
+    private static String TRAINING_DATA_SET_FILENAME="";
+    private static String TESTING_DATA_SET_FILENAME="";
+    private static String ODDS_RATIO_DATA_SET_FILENAME="";
 
     private static HashMap<String, HashMap<String, Double>> _coefficientsCategorical;
     private static HashMap<String, Double> _coefficientsNumeric;
@@ -41,7 +41,7 @@ public class LogisticRegression {
      */
     public static Instances getDataSet(String fileName) throws IOException {
 
-        _classIndex = 4;
+        _classIndex = 9;
         /** the arffloader to load the arff file */
         ArffLoader loader = new ArffLoader();
 
@@ -176,7 +176,14 @@ public class LogisticRegression {
      *
      * @throws Exception
      */
-    public static void processCategorical() throws Exception {
+    public static ArrayList<HashMap<String, Double>> processCategorical(
+            String training, String output, int classIndex
+    ) throws Exception {
+
+        TRAINING_DATA_SET_FILENAME = training;
+        ODDS_RATIO_DATA_SET_FILENAME = output;
+        _classIndex = classIndex;
+
 
         ArrayList<Instance> fortioriCases = new ArrayList<>();
         Instance predicationForCase = getDataSet(ODDS_RATIO_DATA_SET_FILENAME).get(1);
@@ -186,7 +193,7 @@ public class LogisticRegression {
         Instance queryCase = getDataSet(ODDS_RATIO_DATA_SET_FILENAME).firstInstance();
 
         Instances trainingDataSet = getDataSet(TRAINING_DATA_SET_FILENAME);
-        Instances testingDataSet = getDataSet(TESTING_DATA_SET_FILENAME);
+        // Instances testingDataSet = getDataSet(TESTING_DATA_SET_FILENAME);
         Logistic classifier = new Logistic();
         classifier.buildClassifier(trainingDataSet);
 
@@ -209,11 +216,23 @@ public class LogisticRegression {
         System.out.println("===========OODS RATIO AGAINST=========");
         System.out.println(oddsRatioAgainst);
 
+        ArrayList<HashMap<String, Double>> oddsRatio = new ArrayList<>();
+        oddsRatio.add(oddsRatioFor);
+        oddsRatio.add(oddsRatioAgainst);
+
+        return oddsRatio;
+
 //        /** Prediction Output */
 //        System.out.println(value);
     }
 
-    public static void processNumeric() throws Exception {
+    public static ArrayList<HashMap<String, Double>> processNumeric(
+            String training, String output, int classIndex
+    ) throws Exception {
+
+        TRAINING_DATA_SET_FILENAME = training;
+        ODDS_RATIO_DATA_SET_FILENAME = output;
+        _classIndex = classIndex;
 
         ArrayList<Instance> fortioriCases = new ArrayList<>();
         Instance predicationForCase = getDataSet(ODDS_RATIO_DATA_SET_FILENAME).get(1);
@@ -223,7 +242,7 @@ public class LogisticRegression {
         Instance queryCase = getDataSet(ODDS_RATIO_DATA_SET_FILENAME).firstInstance();
 
         Instances trainingDataSet = getDataSet(TRAINING_DATA_SET_FILENAME);
-        Instances testingDataSet = getDataSet(TESTING_DATA_SET_FILENAME);
+        // Instances testingDataSet = getDataSet(TESTING_DATA_SET_FILENAME);
         Logistic classifier = new Logistic();
         classifier.buildClassifier(trainingDataSet);
 
@@ -246,6 +265,11 @@ public class LogisticRegression {
 
 //        /** Prediction Output */
 //        System.out.println(value);
+        ArrayList<HashMap<String, Double>> oddsRatio = new ArrayList<>();
+        oddsRatio.add(oddsRatioFor);
+        oddsRatio.add(oddsRatioAgainst);
+
+        return oddsRatio;
     }
 
 }

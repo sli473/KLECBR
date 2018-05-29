@@ -103,12 +103,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        LogisticRegression logisticRegression = new LogisticRegression();
-        try {
-            logisticRegression.processCategorical();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public static Collection<CBRCase> createLocalCaseBase(Collection<RetrievalResult> cases, int k) {

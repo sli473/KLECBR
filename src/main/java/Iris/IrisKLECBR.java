@@ -19,6 +19,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
 
 
@@ -131,13 +132,6 @@ public class IrisKLECBR implements KLECBR {
             bw.close();
             outputWriter.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        LogisticRegression logisticRegression = new LogisticRegression();
-        try {
-            logisticRegression.processNumeric();
-        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -328,6 +322,19 @@ public class IrisKLECBR implements KLECBR {
 
         } catch (Exception var6) {
             LogFactory.getLog(IrisKLECBR.class).error(var6);
+        }
+
+        LogisticRegression logisticRegression = new LogisticRegression();
+        ArrayList<HashMap<String, Double>> ratios;
+
+        try {
+            ratios = logisticRegression.processNumeric(
+                    "/data/iris/localcasebase.arff",
+                    "/data/iris/output.arff",
+                    4
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

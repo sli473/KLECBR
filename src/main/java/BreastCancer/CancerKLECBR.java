@@ -1,6 +1,8 @@
 package BreastCancer;
 
 import KLECBR.KLECBR;
+import KLECBR.ExplanationGenerator;
+import KLECBR.KLECaseComponent;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbrcore.*;
 import jcolibri.connector.DataBaseConnector;
@@ -18,6 +20,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class CancerKLECBR implements KLECBR {
@@ -128,13 +131,6 @@ public class CancerKLECBR implements KLECBR {
             bw.close();
             outputWriter.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        LogisticRegression logisticRegression = new LogisticRegression();
-        try {
-            logisticRegression.process();
-        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -324,11 +320,11 @@ public class CancerKLECBR implements KLECBR {
 
     public static void main(String[] args) {
         CancerKLECBR klecbr = getInstance();
+        CBRQuery query = klecbr.createQuery();
 
         try {
             klecbr.configure();
             klecbr.preCycle();
-            CBRQuery query = klecbr.createQuery();
             klecbr.cycle(query);
             System.out.println("Solution of the case is: " + klecbr.getSolution().get_classification());
             klecbr.postCycle();
@@ -339,6 +335,26 @@ public class CancerKLECBR implements KLECBR {
 
         } catch (Exception var6) {
             LogFactory.getLog(CancerKLECBR.class).error(var6);
+        }
+
+        LogisticRegression logisticRegression = new LogisticRegression();
+        ArrayList<HashMap<String, Double>> ratios = new ArrayList<>();
+
+        String solution = klecbr._solution.get_classification() == 2 ? "benign" : "malignant";
+        KLECaseComponent kleCaseComponent = (KLECaseComponent) query.getDescription();
+
+        ExplanationGenerator explainer = new ExplanationGenerator("data/breastcancer/explanation.txt", solution, kleCaseComponent, klecbr._fortioriCase.get(0));
+
+        try {
+            ratios = logisticRegression.processNumeric(
+                    "/data/breastcancer/localcasebase.arff",
+                    "/data/breastcancer/output.arff",
+                    9
+            );
+            explainer.generateExplanation(ratios.get(0), ratios.get(1));
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
