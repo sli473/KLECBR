@@ -52,7 +52,7 @@ public class ExplanationGenerator {
             bw.write("Classification for Case: " + solution);
             bw.newLine();
 
-            bw.write("Fortiori Case:");
+            bw.write("Explanation Case:");
             bw.newLine();
             bw.write("Features:");
             bw.newLine();
@@ -75,31 +75,24 @@ public class ExplanationGenerator {
                 double oddRatio = ORfor.get(s);
 
                 String key = replaceDash(s);
-                bw.newLine();
 
-                String relation = Integer.parseInt(queryInfo.get(key)) > Integer.parseInt(fortioriInfo.get(key)) ? "higher" : "lower";
-                if(relation.equals("higher") && oddRatio > 1) {
-                    bw.write("A higher "+key+" Value supports the classification of:" +solution);
-                } else if(relation.equals("lower") && oddRatio > 1) {
-                    bw.write("A lower "+key+" Value supports the classification of:" +solution);
-                } else if(relation.equals("higher") && oddRatio < 1) {
-                    bw.write("A higher "+key+" Value does not support the classfication of: "+solution);
-                } else {
-                    bw.write("A lower "+key+" Value does not support the classification of: "+solution);
-                }
-
-                explanation.append("Because the query cases'");
-                explanation.append(key);
-                explanation.append(" value is ");
-                explanation.append(relation + " than the fortiori case");
                 if(oddRatio > 1) {
-                   explanation.append("it does support the classification");
-                } else {
-                    explanation.append("it does not support the classification");
-                }
+                    bw.newLine();
+                    String relation = Integer.parseInt(queryInfo.get(key)) > Integer.parseInt(fortioriInfo.get(key)) ? "higher" : "lower";
+                    if(relation.equals("higher")) {
+                        bw.write("A higher "+key+" Value supports the classification of:" +solution);
+                    } else if(relation.equals("lower")) {
+                        bw.write("A lower " + key + " Value supports the classification of:" + solution);
+                    }
+                    explanation.append(key + " is "+ oddRatio +" times more likely to support the same classification as the explanation. ");
+                    explanation.append("Because the query case '");
+                    explanation.append(key);
+                    explanation.append("' value is ");
+                    explanation.append(relation + " than the explanation case.");
 
-                bw.newLine();
-                bw.write(explanation.toString());
+                    bw.newLine();
+                    bw.write(explanation.toString());
+                }
             }
 
             bw.flush();
