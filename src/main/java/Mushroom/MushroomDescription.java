@@ -243,10 +243,157 @@ public class MushroomDescription implements KLECaseComponent {
 
         hm.put("Cap Shape", capShape);
 
-        String capSurface;
+        String capSurface = "";
 
-        if(_capSurface.equals())
+        if(_capSurface.equals("f")) {
+            capSurface = "fibrous";
+        } else if (_capSurface.equals("g")) {
+            capSurface = "grooves";
+        } else if (_capSurface.equals("y")) {
+            capSurface = "scaly";
+        } else if (_capSurface.equals("s")) {
+            capSurface = "smooth";
+        }
 
+        hm.put("Cap Surface", capSurface);
+
+        String value = "";
+
+        if(_capColour.equals("n")) {
+            value = "brown";
+        } else if (_capColour.equals("b")) {
+            value = "buff";
+        } else if (_capColour.equals("c")) {
+            value = "cinnamon";
+        } else if (_capColour.equals("g")) {
+            value = "gray";
+        } else if (_capColour.equals("r")) {
+            value = "green";
+        } else if (_capColour.equals("p")) {
+            value = "pink";
+        } else if (_capColour.equals("u")) {
+            value = "purple";
+        } else if (_capColour.equals("e")) {
+            value = "red";
+        } else if (_capColour.equals("w")) {
+            value = "white";
+        } else if (_capColour.equals("y")) {
+            value = "yellow";
+        }
+
+        hm.put("Cap Colour", value);
+
+        if(_bruises.equals("t")) {
+            value = "true";
+        } else {
+            value = "false";
+        }
+
+        hm.put("Bruises", value);
+
+        if(_odor.equals("a")) {
+            value = "almond";
+        } else if (_odor.equals("l")) {
+            value = "anise";
+        } else if (_odor.equals("c")) {
+            value = "creosote";
+        } else if (_odor.equals("y")) {
+            value = "fishy";
+        } else if (_odor.equals("f")) {
+            value = "foul";
+        } else if (_odor.equals("m")) {
+            value = "musty";
+        } else if (_odor.equals("n")) {
+            value = "none";
+        } else if (_odor.equals("p")) {
+            value = "pungent";
+        } else if (_odor.equals("s")) {
+            value = "spicy";
+        }
+
+        hm.put("Odor", value);
+
+        if(_gillAttachment.equals("a")) {
+            value = "attached";
+        } else if (_gillAttachment.equals("d")) {
+            value = "descending";
+        } else if (_gillAttachment.equals("f")) {
+            value = "free";
+        } else if (_gillAttachment.equals("n")) {
+            value = "notched";
+        }
+
+        hm.put("Gill Attachment", value);
+
+        if(_gillSpacing.equals("c")) {
+            value = "close";
+        } else if(_gillSpacing.equals("w")) {
+            value = "crowded";
+        } else {
+            value = "distant";
+        }
+
+        hm.put("Gill Spacing", value);
+
+        if(_gillSize.equals("b")) {
+            value = "broad";
+        } else {
+            value = "narrow";
+        }
+
+        hm.put("Gill Size", value);
+
+        if(_gillColor.equals("k")) {
+            value = "black";
+        } else if (_gillColor.equals("n")) {
+            value = "brown";
+        } else if (_gillColor.equals("b")) {
+            value = "buff";
+        } else if (_gillColor.equals("h")) {
+            value = "chocolate";
+        } else if (_gillColor.equals("g")) {
+            value = "gray";
+        } else if (_gillColor.equals("r")) {
+            value = "green";
+        } else if (_gillColor.equals("o")) {
+            value = "orange";
+        } else if (_gillColor.equals("p")) {
+            value = "pink";
+        } else if (_gillColor.equals("u")) {
+            value = "purple";
+        } else if (_gillColor.equals("e")) {
+            value = "red";
+        } else if (_gillColor.equals("w")) {
+            value = "white";
+        } else {
+            value = "yellow";
+        }
+
+        hm.put("Gill Colour", value);
+
+        if(_stalkShape.equals("e")) {
+            value = "enlarging";
+        } else {
+            value = "tapering";
+        }
+
+        hm.put("Stalk Shape", value);
+
+        if(_stalkRoot.equals("b")) {
+            value = "bulbous";
+        } else if(_stalkRoot.equals("c")) {
+            value = "club";
+        } else if(_stalkRoot.equals("u")) {
+            value = "cup";
+        } else if(_stalkRoot.equals("e")) {
+            value = "equals";
+        } else if(_stalkRoot.equals("z")) {
+            value = "rhizomorphs";
+        } else {
+            value = "rooted";
+        }
+
+        hm.put("Stalk Root", value);
 
         return hm;
     }
