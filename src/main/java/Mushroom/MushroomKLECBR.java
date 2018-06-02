@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import KLECBR.ExplanationGenerator;
+import KLECBR.KLECaseComponent;
 
 import KLECBR.KLECBR;
 
@@ -367,11 +369,11 @@ public class MushroomKLECBR implements KLECBR {
 
     public static void main(String[] args) {
         MushroomKLECBR klecbr = getInstance();
+        CBRQuery query = klecbr.createQuery();
 
         try {
             klecbr.configure();
             klecbr.preCycle();
-            CBRQuery query = klecbr.createQuery();
             klecbr.cycle(query);
             System.out.println("Solution of the case is: " + klecbr.getSolution().is_isPoisonous());
             klecbr.postCycle();
@@ -387,12 +389,20 @@ public class MushroomKLECBR implements KLECBR {
         LogisticRegression logisticRegression = new LogisticRegression();
         ArrayList<HashMap<String, Double>> ratios;
 
+        String solution = klecbr._solution.is_isPoisonous() == "e" ? "edible" : "poisonous";
+        KLECaseComponent kleCaseComponent = (KLECaseComponent) query.getDescription();
+
+        ExplanationGenerator explainer = new ExplanationGenerator("data/mushrooms/explanation.txt", solution, kleCaseComponent, klecbr._fortioriCase.get(0));
+
         try {
             ratios = logisticRegression.processCategorical(
-                    "/data/iris/localcasebase.arff",
-                    "/data/iris/output.arff",
+                    "/data/mushroom/localcasebase.arff",
+                    "/data/mushroom/output.arff",
                     0
             );
+
+            explainer.generateExplanation(ratios.get(0), ratios.get(1));
+
         } catch (Exception e) {
             e.printStackTrace();
         }

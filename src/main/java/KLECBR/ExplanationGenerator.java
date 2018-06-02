@@ -51,7 +51,7 @@ public class ExplanationGenerator {
 
             bw.write("Classification for Case: " + solution);
             bw.newLine();
-
+            bw.newLine();
             bw.write("Explanation Case:");
             bw.newLine();
             bw.write("Features:");

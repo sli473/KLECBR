@@ -1,9 +1,12 @@
 package Mushroom;
 
+import KLECBR.KLECaseComponent;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
 
-public class MushroomDescription implements CaseComponent {
+import java.util.HashMap;
+
+public class MushroomDescription implements KLECaseComponent {
 
     int _caseId;
     String _capShape;
@@ -218,5 +221,33 @@ public class MushroomDescription implements CaseComponent {
     @Override
     public Attribute getIdAttribute() {
         return new Attribute("_caseId", this.getClass());
+    }
+
+    @Override
+    public HashMap<String, String> getHashMap() {
+        HashMap<String, String> hm = new HashMap<>();
+        String capShape = "";
+        if(_capShape.equals("b")) {
+            capShape = "bell";
+        } else if (_capShape.equals("c")) {
+            capShape = "conical";
+        } else if (_capShape.equals("x")) {
+            capShape = "convex";
+        } else if (_capShape.equals("f")) {
+            capShape = "flat";
+        } else if (_capShape.equals("k")) {
+            capShape = "knobbed";
+        } else {
+            capShape = "sunken";
+        }
+
+        hm.put("Cap Shape", capShape);
+
+        String capSurface;
+
+        if(_capSurface.equals())
+
+
+        return hm;
     }
 }
