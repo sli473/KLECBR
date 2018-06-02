@@ -67,11 +67,8 @@ public class CategoricalExplanationGenerator extends ExplanationGenerator{
 
                 if(oddRatio > 1) {
                     bw.newLine();
-                    explanation.append(key + " with a  "+ queryInfo.get(key) +"value is more likely to support the same classification as the explanation. ");
-                    explanation.append("Because the query case '");
-                    explanation.append(key);
-
-                    bw.newLine();
+                    explanation.append(key + " with a "+ queryInfo.get(key) +" value is "+oddRatio+" times more likely to support the classification than ");
+                    explanation.append(fortioriInfo.get(key));
                     bw.write(explanation.toString());
                 }
             }

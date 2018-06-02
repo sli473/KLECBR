@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import KLECBR.ExplanationGenerator;
 import KLECBR.KLECaseComponent;
+import KLECBR.CategoricalExplanationGenerator;
 
 import KLECBR.KLECBR;
 
@@ -77,9 +78,8 @@ public class MushroomKLECBR implements KLECBR {
             System.out.println(help);
         }
 
-        _solution = (MushroomSolution)calculateSolution(eval, 20);
-        localCaseBase = createLocalCaseBase(eval, 20);
-        _solution = (MushroomSolution)calculateSolution(eval, 20);
+        _solution = (MushroomSolution)calculateSolution(eval, 100);
+        localCaseBase = createLocalCaseBase(eval, 100);
 
         Iterator var6 = localCaseBase.iterator();
 
@@ -275,19 +275,19 @@ public class MushroomKLECBR implements KLECBR {
     @Override
     public CBRQuery createQuery() {
         MushroomDescription queryDesc = new MushroomDescription();
-        queryDesc.set_bruises("f");
-        queryDesc.set_capColour("w");
-        queryDesc.set_capShape("f");
-        queryDesc.set_capSurface("f");
-        queryDesc.set_odor("n");
+        queryDesc.set_bruises("t");
+        queryDesc.set_capColour("n");
+        queryDesc.set_capShape("x");
+        queryDesc.set_capSurface("y");
+        queryDesc.set_odor("l");
         queryDesc.set_gillAttachment("f");
-        queryDesc.set_gillSpacing("w");
+        queryDesc.set_gillSpacing("c");
         queryDesc.set_gillSize("b");
-        queryDesc.set_gillColor("k");
-        queryDesc.set_stalkShape("t");
-        queryDesc.set_stalkRoot("e");
+        queryDesc.set_gillColor("w");
+        queryDesc.set_stalkShape("e");
+        queryDesc.set_stalkRoot("r");
         queryDesc.set_stalkSurfaceAboveRing("s");
-        queryDesc.set_stalkSurfaceBelowRing("s");
+        queryDesc.set_stalkSurfaceBelowRing("y");
         queryDesc.set_stalkColourAboveRing("w");
         queryDesc.set_stalkColourBelowRing("w");
         queryDesc.set_veilType("p");
@@ -295,8 +295,8 @@ public class MushroomKLECBR implements KLECBR {
         queryDesc.set_ringNumber("o");
         queryDesc.set_ringType("p");
         queryDesc.set_sporePrintColor("n");
-        queryDesc.set_population("y");
-        queryDesc.set_habitat("u");
+        queryDesc.set_population("s");
+        queryDesc.set_habitat("p");
         CBRQuery query = new CBRQuery();
         query.setDescription(queryDesc);
         return query;
@@ -392,7 +392,7 @@ public class MushroomKLECBR implements KLECBR {
         String solution = klecbr._solution.is_isPoisonous() == "e" ? "edible" : "poisonous";
         KLECaseComponent kleCaseComponent = (KLECaseComponent) query.getDescription();
 
-        ExplanationGenerator explainer = new ExplanationGenerator("data/mushrooms/explanation.txt", solution, kleCaseComponent, klecbr._fortioriCase.get(0));
+        CategoricalExplanationGenerator explainer = new CategoricalExplanationGenerator("data/mushrooms/explanation.txt", solution, kleCaseComponent, klecbr._fortioriCase.get(0));
 
         try {
             ratios = logisticRegression.processCategorical(

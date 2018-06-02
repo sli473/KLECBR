@@ -281,7 +281,7 @@ public class MushroomDescription implements KLECaseComponent {
             value = "yellow";
         }
 
-        hm.put("Cap Colour", value);
+        hm.put("Cap Color", value);
 
         if(_bruises.equals("t")) {
             value = "true";

@@ -40,7 +40,6 @@ public class LogisticRegression {
      */
     public static Instances getDataSet(String fileName) throws IOException {
 
-        _classIndex = 9;
         /** the arffloader to load the arff file */
         ArffLoader loader = new ArffLoader();
 
