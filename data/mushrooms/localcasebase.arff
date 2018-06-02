@@ -1,27 +1,67 @@
 @relation mushrooms
 
 @attribute isPoisonous {p,e}
-@attribute cap-shape {x,b,s,f,k,c}
-@attribute cap-surface {s,y,f,g}
-@attribute cap-color {n,y,w,g,e,p,b,u,c,r}
-@attribute bruises {t,f}
-@attribute odor {p,a,l,n,f,c,y,s,m}
-@attribute gill-attachment {f,a}
-@attribute gill-spacing {c,w}
-@attribute gill-size {n,b}
-@attribute gill-color {k,n,g,p,w,h,u,e,b,r,y,o}
-@attribute stalk-shape {e,t}
-@attribute stalk-root {e,c,b,r}
-@attribute stalk-surface-above-ring {s,f,k,y}
-@attribute stalk-surface-below-ring {s,f,y,k}
-@attribute stalk-color-above-ring {w,g,p,n,b,e,o,c,y}
-@attribute stalk-color-below-ring {w,p,g,b,n,e,y,o,c}
-@attribute veil-type {p}
-@attribute veil-color {w,n,o,y}
-@attribute ring-number {o,t,n}
-@attribute ring-type {p,e,l,f,n}
-@attribute spore-print-color {k,n,u,h,w,r,o,y,b}
-@attribute population {s,n,a,v,y,c}
-@attribute habitat {u,g,m,d,p,w,l}
+@attribute Cap-Shape {x,b,s,f,k,c}
+@attribute Cap-Surface {s,y,f,g}
+@attribute Cap-Color {n,y,w,g,e,p,b,u,c,r}
+@attribute Bruises {t,f}
+@attribute Odor {p,a,l,n,f,c,y,s,m}
+@attribute Gill-Attachment {f,a}
+@attribute Gill-Spacing {c,w}
+@attribute Gill-Size {n,b}
+@attribute Gill-Color {k,n,g,p,w,h,u,e,b,r,y,o}
+@attribute Stalk-Shape {e,t}
+@attribute Stalk-Root {e,c,b,r}
+@attribute Stalk-Surface-Above-Ring {s,f,k,y}
+@attribute Stalk-Surface-Below-Ring {s,f,y,k}
+@attribute Stalk-Color-Above-Ring {w,g,p,n,b,e,o,c,y}
+@attribute Stalk-Color-Below-Ring {w,p,g,b,n,e,y,o,c}
+@attribute Veil-Type {p}
+@attribute Veil-Color {w,n,o,y}
+@attribute Ring-Number {o,t,n}
+@attribute Ring-Type {p,e,l,f,n}
+@attribute Spore-Print-Color {k,n,u,h,w,r,o,y,b}
+@attribute Population {s,n,a,v,y,c}
+@attribute Habitat {u,g,m,d,p,w,l}
 
 @data
+e,f,f,w,f,n,f,w,b,k,t,e,s,s,w,w,p,w,o,e,n,a,g
+e,f,f,w,f,n,f,w,b,k,t,e,s,s,w,w,p,w,o,e,n,s,g
+e,f,f,w,f,n,f,w,b,k,t,e,s,f,w,w,p,w,o,e,n,a,g
+e,f,f,n,f,n,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,y,u
+e,f,f,g,f,n,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,y,u
+e,f,f,w,f,n,f,w,b,k,t,e,f,s,w,w,p,w,o,e,n,s,g
+e,f,f,w,f,n,f,w,b,h,t,e,s,s,w,w,p,w,o,e,n,a,g
+e,f,f,w,f,n,f,w,b,n,t,e,s,s,w,w,p,w,o,e,n,a,g
+e,f,f,w,f,n,f,w,b,n,t,e,s,s,w,w,p,w,o,e,n,s,g
+e,f,f,w,f,n,f,w,b,k,t,e,s,s,w,w,p,w,o,e,k,a,g
+e,f,f,n,f,n,f,w,b,k,t,e,s,s,w,w,p,w,o,e,n,s,g
+e,f,f,w,f,n,f,w,b,k,t,e,f,s,w,w,p,w,o,e,n,a,g
+e,f,f,w,f,n,f,w,b,k,t,e,s,f,w,w,p,w,o,e,n,s,g
+e,f,f,g,f,n,f,w,b,k,t,e,s,s,w,w,p,w,o,e,n,a,g
+e,f,s,w,f,n,f,w,b,k,t,e,s,s,w,w,p,w,o,e,n,s,g
+e,f,f,g,f,n,f,w,b,k,t,e,s,s,w,w,p,w,o,e,n,s,g
+e,f,f,w,f,n,f,w,b,p,t,e,s,s,w,w,p,w,o,e,n,a,g
+e,x,f,w,f,n,f,w,b,k,t,e,s,s,w,w,p,w,o,e,n,a,g
+e,f,f,n,f,n,f,w,b,k,t,e,s,s,w,w,p,w,o,e,n,a,g
+e,f,f,w,f,n,f,w,b,k,t,e,s,s,w,w,p,w,o,e,k,s,g
+p,f,y,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,s,u
+p,f,s,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,s,u
+p,f,y,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,v,u
+p,f,s,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,v,u
+p,x,y,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,v,u
+p,x,y,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,s,u
+p,x,s,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,v,u
+p,x,s,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,s,u
+p,f,y,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,k,s,u
+p,f,y,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,v,g
+p,f,y,n,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,v,u
+p,f,s,w,t,p,f,c,n,w,e,e,s,s,w,w,p,w,o,p,n,s,u
+p,f,s,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,k,s,u
+p,f,s,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,v,g
+p,f,s,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,s,g
+p,f,y,w,t,p,f,c,n,n,e,e,s,s,w,w,p,w,o,p,n,v,u
+p,f,y,w,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,s,g
+p,f,y,w,t,p,f,c,n,p,e,e,s,s,w,w,p,w,o,p,n,s,u
+p,f,s,n,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,n,v,u
+e,f,s,w,t,p,f,c,n,n,e,e,s,s,w,w,p,w,o,p,n,s,u

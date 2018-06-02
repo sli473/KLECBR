@@ -90,9 +90,9 @@ public class MushroomKLECBR implements KLECBR {
             System.out.println(nse);
         }
 
-        URL savedCaseBase = FileIO.findFile("data/localcasebase.arff");
-        URL fileTemplate = FileIO.findFile("data/mushroomTemplate.arff");
-        URL outputFile = FileIO.findFile("data/output.arff");
+        URL savedCaseBase = FileIO.findFile("data/mushrooms/localcasebase.arff");
+        URL fileTemplate = FileIO.findFile("data/mushrooms/mushroomTemplate.arff");
+        URL outputFile = FileIO.findFile("data/mushrooms/output.arff");
 
         CBRCase queryCase = new CBRCase();
         queryCase.setDescription(cbrQuery.getDescription());
@@ -396,8 +396,8 @@ public class MushroomKLECBR implements KLECBR {
 
         try {
             ratios = logisticRegression.processCategorical(
-                    "/data/mushroom/localcasebase.arff",
-                    "/data/mushroom/output.arff",
+                    "/data/mushrooms/localcasebase.arff",
+                    "/data/mushrooms/output.arff",
                     0
             );
 
