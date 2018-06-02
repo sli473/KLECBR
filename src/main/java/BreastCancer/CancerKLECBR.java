@@ -347,7 +347,7 @@ public class CancerKLECBR implements KLECBR {
 
         try {
             ratios = logisticRegression.processNumeric(
-                    "/data/breastcancer/localcasebase.arff",
+                    "/data/breastcancer/breastCancer.arff",
                     "/data/breastcancer/output.arff",
                     9
             );

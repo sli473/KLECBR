@@ -24,7 +24,6 @@ import weka.filters.unsupervised.attribute.RemoveUseless;
 public class LogisticRegression {
 
     private static String TRAINING_DATA_SET_FILENAME="";
-    private static String TESTING_DATA_SET_FILENAME="";
     private static String ODDS_RATIO_DATA_SET_FILENAME="";
 
     private static HashMap<String, HashMap<String, Double>> _coefficientsCategorical;
@@ -123,7 +122,7 @@ public class LogisticRegression {
             } catch (NullPointerException e) {
                 explanationCoefficient = 0;
             }
-            double oddsRatio = Math.exp(queryCoefficient - explanationCoefficient);
+            double oddsRatio = Math.exp(explanationCoefficient - queryCoefficient);
             oddsRatios.put(attribute.name(), oddsRatio);
         }
         return oddsRatios;
@@ -148,7 +147,7 @@ public class LogisticRegression {
                 } catch (NullPointerException e) {
                     explanationCoefficient = 0;
                 }
-                double oddsRatio = Math.exp(queryCoefficient * queryCase.value(attribute) - explanationCoefficient * explanationQuery.value(attribute));
+                double oddsRatio = Math.exp(explanationCoefficient * explanationQuery.value(attribute) - queryCoefficient * queryCase.value(attribute));
                 oddsRatios.put(attribute.name(), oddsRatio);
             }
         }
