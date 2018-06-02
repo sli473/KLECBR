@@ -268,7 +268,7 @@ public class ExplanationGenerator {
             numericalWeights.add(0.3994052);
             numericalWeights.add(0.3489156);
             numericalWeights.add(0.3593192);
-            numericalWeights.add(0.1363963);
+            numericalWeights.add(0.363963);
             numericalWeights.add(0.3591949);
             numericalWeights.add(0.2499993);
 
