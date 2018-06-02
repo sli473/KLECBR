@@ -8,6 +8,7 @@ import jcolibri.cbrcore.CBRCase;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.HashMap;
 import java.net.URL;
@@ -63,38 +64,51 @@ public class ExplanationGenerator {
             }
 
             CancerSolution fortioriSolution = (CancerSolution) fortioriCase.getSolution();
-
             String val = fortioriSolution.get_classification() == 2 ? "benign" : "malignant";
 
             bw.write("Classification for Case: " + val);
             bw.newLine();
 
+            bw.write("The query case was compared to a pre-determined classification (explanation case) where both were determined to be " + val + ".");
 
+            HashMap<String, List<String>> classification = new HashMap<>();
+            List<String> higherVariables = new ArrayList<>();
+            List<String> lowerVariables = new ArrayList<>();
+            classification.put("higher", higherVariables);
+            classification.put("lower", lowerVariables);
+
+            // Putting the keys into higher or lower categories
             for(String s: ORfor.keySet()) {
-                explanation = new StringBuilder();
                 double oddRatio = ORfor.get(s);
-
                 String key = replaceDash(s);
 
+                // Classifying variables to chuck into higher or lower categories
                 if(oddRatio > 1) {
-                    bw.newLine();
                     String relation = Integer.parseInt(queryInfo.get(key)) > Integer.parseInt(fortioriInfo.get(key)) ? "higher" : "lower";
-                    if(relation.equals("higher")) {
-                        bw.write("A higher "+key+" Value supports the classification of:" +solution);
-                    } else if(relation.equals("lower")) {
-                        bw.write("A lower " + key + " Value supports the classification of:" + solution);
-                    }
-                    explanation.append(key + " is "+ oddRatio +" times more likely to support the same classification as the explanation. ");
-                    explanation.append("Because the query case '");
-                    explanation.append(key);
-                    explanation.append("' value is ");
-                    explanation.append(relation + " than the explanation case.");
-
-                    bw.newLine();
-                    bw.write(explanation.toString());
+                    List<String> variableList = classification.get(relation);
+                    variableList.add(key);
                 }
             }
 
+            explanation = new StringBuilder();
+            higherVariables = classification.get("higher");
+            lowerVariables = classification.get("lower");
+
+            if (higherVariables.size() > 0) {
+                String higherVarExplanation = createExplanation("higher", val, higherVariables);
+                explanation.append(higherVarExplanation);
+            }
+
+            if (lowerVariables.size() > 0) {
+                if (higherVariables.size() > 0) {
+                    explanation.append("Furthermore, ");
+                }
+                String lowerVarExplanation = createExplanation("lower", val, lowerVariables);
+                explanation.append(lowerVarExplanation);
+            }
+
+            bw.newLine();
+            bw.write(explanation.toString());
             bw.flush();
             bw.close();
 
@@ -131,5 +145,26 @@ public class ExplanationGenerator {
 
     public String replaceDash(String current) {
         return current.replaceAll("-", " ");
+    }
+
+    private String createExplanation(String relation, String classification, List<String> variables) {
+        StringBuilder sb = new StringBuilder();
+
+        if (variables.size() == 1) {
+            sb.append(variables.get(0));
+        } else if (variables.size() == 2) {
+            sb.append(variables.get(0) + " and " + variables.get(1));
+        } else {
+            for (int i = 0; i < variables.size(); i++) {
+                if (i == variables.size() - 1) {
+                    sb.append("and " + variables.get(i));
+                } else {
+                    sb.append(variables.get(i) + ", ");
+                }
+            }
+        }
+
+        sb.append(" being " + relation + " on the query compared to the explanation means it is more likely to be " + classification + ". ");
+        return sb.toString();
     }
 }
