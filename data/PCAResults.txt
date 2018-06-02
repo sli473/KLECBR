@@ -1,0 +1,17 @@
+Breast Cancer Data -> PCA1 Component (66% Variability)
+Clump.Thickness             Uniformity.of.Cell.Size         Uniformity.of.Cell.Shape 
+-0.3185960                  -0.4051296                      -0.3994052 
+Marginal.Adhesion           Single.Epithelial.Cell.Size     Bland.Chromatin 
+-0.3489156                  -0.3593192                      -0.3639630 
+Normal.Nucleoli             Mitoses 
+-0.3591949                  -0.2499993
+
+Mushroom Data -> PCA1 Component (19.8% Variability)
+cap.shape                  cap.surface              cap.color                 bruises             odor              gill.attachment 
+-0.037329637               0.090467869              -0.157081732              0.428337712         0.201708930       -0.004086984 
+gill.spacing               gill.size                gill.color                stalk.shape         stalk.root        stalk.surface.above.ring 
+-0.154700030               0.074343986              0.314157001               0.182076707         -0.052566595      0.363895079 
+stalk.surface.below.ring   stalk.color.above.ring   stalk.color.below.ring    veil.color          ring.number       ring.type 
+0.350970244                0.136846306              0.144957503               0.017748065         0.084506338       0.418242387 
+spore.print.color          population               habitat 
+0.267006190                0.117791917              -0.120882160 
