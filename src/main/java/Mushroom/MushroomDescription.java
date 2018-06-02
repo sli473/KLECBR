@@ -243,9 +243,170 @@ public class MushroomDescription implements KLECaseComponent {
 
         hm.put("Cap Shape", capShape);
 
-        String capSurface;
+        if(_stalkSurfaceAboveRing.equals("f")) {
+            capShape = "fibrous";
+        } else if (_stalkSurfaceAboveRing.equals("y")) {
+            capShape = "scaly";
+        } else if (_stalkSurfaceAboveRing.equals("k")) {
+            capShape = "silky";
+        } else {
+            capShape = "smooth";
+        }
 
-        if(_capSurface.equals())
+        hm.put("Stalk Surface Above Ring", capShape);
+
+        if(_stalkSurfaceBelowRing.equals("f")) {
+            capShape = "fibrous";
+        } else if (_stalkSurfaceBelowRing.equals("y")) {
+            capShape = "scaly";
+        } else if (_stalkSurfaceBelowRing.equals("k")) {
+            capShape = "silky";
+        } else {
+            capShape = "smooth";
+        }
+
+        hm.put("Stalk Surface Below Ring", capShape);
+
+        if(_stalkColourAboveRing.equals("n")) {
+            capShape = "brown";
+        } else if (_stalkColourAboveRing.equals("b")) {
+            capShape = "buff";
+        } else if (_stalkColourAboveRing.equals("c")) {
+            capShape = "cinnamon";
+        } else if (_stalkColourAboveRing.equals("g")) {
+            capShape = "gray";
+        } else if (_stalkColourAboveRing.equals("o")) {
+            capShape = "orange";
+        } else if (_stalkColourAboveRing.equals("p")) {
+            capShape = "pink";
+        } else if (_stalkColourAboveRing.equals("e")) {
+            capShape = "red";
+        } else if (_stalkColourAboveRing.equals("w")) {
+            capShape = "white";
+        } else {
+            capShape = "yellow";
+        }
+        hm.put("Stalk Colour Above Ring", capShape);
+
+        if(_stalkColourBelowRing.equals("n")) {
+            capShape = "brown";
+        } else if (_stalkColourBelowRing.equals("b")) {
+            capShape = "buff";
+        } else if (_stalkColourBelowRing.equals("c")) {
+            capShape = "cinnamon";
+        } else if (_stalkColourBelowRing.equals("g")) {
+            capShape = "gray";
+        } else if (_stalkColourBelowRing.equals("o")) {
+            capShape = "orange";
+        } else if (_stalkColourBelowRing.equals("p")) {
+            capShape = "pink";
+        } else if (_stalkColourBelowRing.equals("e")) {
+            capShape = "red";
+        } else if (_stalkColourBelowRing.equals("w")) {
+            capShape = "white";
+        } else {
+            capShape = "yellow";
+        }
+        hm.put("Stalk Colour Below Ring", capShape);
+
+        if(_veilType.equals("p")) {
+            capShape = "partial";
+        } else {
+            capShape = "universal";
+        }
+        hm.put("Veil Type", capShape);
+
+        if(_veilColour.equals("n")) {
+            capShape = "brown";
+        } else if (_veilColour.equals("o")) {
+            capShape = "orange";
+        } else if (_veilColour.equals("w")) {
+            capShape = "white";
+        } else {
+            capShape = "yellow";
+        }
+        hm.put("Veil Colour", capShape);
+
+        if(_ringNumber.equals("n")) {
+            capShape = "none";
+        } else if (_ringNumber.equals("o")) {
+            capShape = "one";
+        } else {
+            capShape = "two";
+        }
+        hm.put("Ring Number", capShape);
+
+        if(_ringType.equals("c")) {
+            capShape = "cobwebby";
+        } else if (_ringType.equals("e")) {
+            capShape = "evanescent";
+        } else if (_ringType.equals("f")) {
+            capShape = "flaring";
+        } else if (_ringType.equals("l")) {
+            capShape = "large";
+        } else if (_ringType.equals("n")) {
+            capShape = "none";
+        } else if (_ringType.equals("p")) {
+            capShape = "pendant";
+        } else if (_ringType.equals("s")) {
+            capShape = "sheathing";
+        } else {
+            capShape = "zone";
+        }
+        hm.put("Ring Type", capShape);
+
+        if(_sporePrintColor.equals("k")) {
+            capShape = "black";
+        } else if (_sporePrintColor.equals("n")) {
+            capShape = "brown";
+        } else if (_sporePrintColor.equals("b")) {
+            capShape = "buff";
+        } else if (_sporePrintColor.equals("h")) {
+            capShape = "chocolate";
+        } else if (_sporePrintColor.equals("r")) {
+            capShape = "green";
+        } else if (_sporePrintColor.equals("o")) {
+            capShape = "orange";
+        } else if (_sporePrintColor.equals("u")) {
+            capShape = "purple";
+        } else if (_sporePrintColor.equals("w")) {
+            capShape = "white";
+        } else {
+            capShape = "yellow";
+        }
+        hm.put("Spore Print Color", capShape);
+
+        if(_population.equals("a")) {
+            capShape = "abundant";
+        } else if (_population.equals("c")) {
+            capShape = "clustered";
+        } else if (_population.equals("n")) {
+            capShape = "numerous";
+        } else if (_population.equals("s")) {
+            capShape = "scattered";
+        } else if (_population.equals("v")) {
+            capShape = "several";
+        } else {
+            capShape = "solitary";
+        }
+        hm.put("Population", capShape);
+
+        if(_habitat.equals("g")) {
+            capShape = "grasses";
+        } else if (_habitat.equals("l")) {
+            capShape = "leaves";
+        } else if (_habitat.equals("m")) {
+            capShape = "meadows";
+        } else if (_habitat.equals("p")) {
+            capShape = "paths";
+        } else if (_habitat.equals("u")) {
+            capShape = "urban";
+        } else if (_habitat.equals("w")) {
+            capShape = "waste";
+        } else {
+            capShape = "woods";
+        }
+        hm.put("Habitat", capShape);
 
 
         return hm;
