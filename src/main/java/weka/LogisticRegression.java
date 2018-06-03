@@ -40,7 +40,6 @@ public class LogisticRegression {
      */
     public static Instances getDataSet(String fileName) throws IOException {
 
-        _classIndex = 9;
         /** the arffloader to load the arff file */
         ArffLoader loader = new ArffLoader();
 
@@ -122,7 +121,7 @@ public class LogisticRegression {
             } catch (NullPointerException e) {
                 explanationCoefficient = 0;
             }
-            double oddsRatio = Math.exp(explanationCoefficient - queryCoefficient);
+            double oddsRatio = Math.exp(queryCoefficient - explanationCoefficient);
             oddsRatios.put(attribute.name(), oddsRatio);
         }
         return oddsRatios;
@@ -147,7 +146,7 @@ public class LogisticRegression {
                 } catch (NullPointerException e) {
                     explanationCoefficient = 0;
                 }
-                double oddsRatio = Math.exp(explanationCoefficient * explanationQuery.value(attribute) - queryCoefficient * queryCase.value(attribute));
+                double oddsRatio = Math.exp(queryCoefficient * queryCase.value(attribute) - explanationCoefficient * explanationQuery.value(attribute));
                 oddsRatios.put(attribute.name(), oddsRatio);
             }
         }
