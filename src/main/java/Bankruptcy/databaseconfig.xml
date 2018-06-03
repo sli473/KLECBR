@@ -1,0 +1,7 @@
+<DataBaseConfiguration>
+    <HibernateConfigFile>src/main/java/Bankruptcy/hibernate.cfg.xml</HibernateConfigFile>
+    <DescriptionMappingFile>src/main/java/Bankruptcy/BankruptcyDescription.hbm.xml</DescriptionMappingFile>
+    <DescriptionClassName>Bankruptcy.BankruptcyDescription</DescriptionClassName>
+    <SolutionMappingFile>BankruptcySolution.hbm.xml</SolutionMappingFile>
+    <SolutionClassName>Bankruptcy.BankruptcySolution</SolutionClassName>
+</DataBaseConfiguration>

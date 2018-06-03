@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+    <class name="Bankruptcy.BankruptcyDescription" table="Bankruptcy">
+
+        <id name="caseId" column="caseId">
+            <generator class="native"/>
+        </id>
+        <property name="NP_Over_TA" column="NP_Over_TA" />
+        <property name="CA_Over_STL" column="CA_OVER_STL" />
+        <property name="EBIT_Over_TA" column="EBIT_Over_TA" />
+        <property name="Sum_Of_Profit_EI_FE_OVER_TA" column="Sum_Of_Profit_EI_FE_OVER_TA" />
+        <property name="GP_Over_STL" column="GP_Over_STL" />
+        <property name="Sum_Of_PI_Over_TA" column="Sum_Of_PI_Over_TA" />
+        <property name="Sum_Of_PD_Over_TL" column="Sum_Of_PD_Over_TL" />
+        <property name="GP_Over_TA" column="GP_Over_TA" />
+        <property name="GP_3Y_Over_TA" column="GP_3Y_Over_TA" />
+        <property name="Sum_Of_NPD_Over_TL" column="Sum_Of_NPD_Over_TL" />
+        <property name="CA_Over_TL" column="CA_Over_TL" />
+
+    </class>
+</hibernate-mapping>
