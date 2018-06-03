@@ -369,7 +369,7 @@ public class MushroomDescription implements KLECaseComponent {
             value = "yellow";
         }
 
-        hm.put("Gill Colour", value);
+        hm.put("Gill Color", value);
 
         if(_stalkShape.equals("e")) {
             value = "enlarging";
@@ -438,7 +438,7 @@ public class MushroomDescription implements KLECaseComponent {
         } else {
             capShape = "yellow";
         }
-        hm.put("Stalk Colour Above Ring", capShape);
+        hm.put("Stalk Color Above Ring", capShape);
 
         if(_stalkColourBelowRing.equals("n")) {
             capShape = "brown";
@@ -459,7 +459,7 @@ public class MushroomDescription implements KLECaseComponent {
         } else {
             capShape = "yellow";
         }
-        hm.put("Stalk Colour Below Ring", capShape);
+        hm.put("Stalk Color Below Ring", capShape);
 
         if(_veilType.equals("p")) {
             capShape = "partial";
@@ -477,7 +477,7 @@ public class MushroomDescription implements KLECaseComponent {
         } else {
             capShape = "yellow";
         }
-        hm.put("Veil Colour", capShape);
+        hm.put("Veil Color", capShape);
 
         if(_ringNumber.equals("n")) {
             capShape = "none";
