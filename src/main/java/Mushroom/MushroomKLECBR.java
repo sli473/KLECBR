@@ -275,28 +275,28 @@ public class MushroomKLECBR implements KLECBR {
     @Override
     public CBRQuery createQuery() {
         MushroomDescription queryDesc = new MushroomDescription();
-        queryDesc.set_bruises("t");
-        queryDesc.set_capColour("n");
-        queryDesc.set_capShape("x");
+        queryDesc.set_capShape("f");
         queryDesc.set_capSurface("y");
-        queryDesc.set_odor("l");
+        queryDesc.set_capColour("n");
+        queryDesc.set_bruises("t");
+        queryDesc.set_odor("n");
         queryDesc.set_gillAttachment("f");
         queryDesc.set_gillSpacing("c");
         queryDesc.set_gillSize("b");
-        queryDesc.set_gillColor("w");
-        queryDesc.set_stalkShape("e");
-        queryDesc.set_stalkRoot("r");
+        queryDesc.set_gillColor("n");
+        queryDesc.set_stalkShape("t");
+        queryDesc.set_stalkRoot("b");
         queryDesc.set_stalkSurfaceAboveRing("s");
-        queryDesc.set_stalkSurfaceBelowRing("y");
-        queryDesc.set_stalkColourAboveRing("w");
+        queryDesc.set_stalkSurfaceBelowRing("s");
+        queryDesc.set_stalkColourAboveRing("p");
         queryDesc.set_stalkColourBelowRing("w");
         queryDesc.set_veilType("p");
         queryDesc.set_veilColour("w");
         queryDesc.set_ringNumber("o");
         queryDesc.set_ringType("p");
-        queryDesc.set_sporePrintColor("n");
-        queryDesc.set_population("s");
-        queryDesc.set_habitat("p");
+        queryDesc.set_sporePrintColor("k");
+        queryDesc.set_population("y");
+        queryDesc.set_habitat("d");
         CBRQuery query = new CBRQuery();
         query.setDescription(queryDesc);
         return query;
@@ -396,7 +396,7 @@ public class MushroomKLECBR implements KLECBR {
 
         try {
             ratios = logisticRegression.processCategorical(
-                    "/data/mushrooms/localcasebase.arff",
+                    "/data/mushrooms/mushrooms.arff",
                     "/data/mushrooms/output.arff",
                     0
             );
